@@ -37,8 +37,8 @@ const user = {
       const captchaKey = userInfo.captchaKey
       return new Promise((resolve, reject) => {
         login(account, password, captchaCode, captchaKey).then(res => {
-          setToken(res.token)
-          commit('SET_TOKEN', res.token)
+          setToken(res.data)
+          commit('SET_TOKEN', res.data)
           resolve()
         }).catch(error => {
           reject(error)
@@ -50,15 +50,15 @@ const user = {
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
-          const user = res.user
-          const avatar = user.avatar == "" ? require("@/assets/image/profile.png") : process.env.VUE_APP_BASE_API + user.avatar;
-          if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', res.roles)
-            commit('SET_PERMISSIONS', res.permissions)
+          //const avatar = user.avatar == "" ? require("@/assets/image/profile.png") : process.env.VUE_APP_BASE_API + user.avatar;
+          const avatar = require("@/assets/image/profile.png")
+          if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', res.data.roles)
+            commit('SET_PERMISSIONS', res.data.permissions)
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_NAME', user.account)
+          commit('SET_NAME', res.data.account)
           commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {

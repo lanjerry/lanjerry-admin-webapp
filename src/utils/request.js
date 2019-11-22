@@ -15,7 +15,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (getToken()) {
-      config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+      config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     return config
   },
@@ -28,9 +28,9 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(res => {
     const code = res.data.code
-    if (code === 401) {
+    if (code === 203) {
       MessageBox.confirm(
-        '登录状态已过期，您可以继续留在该页面，或者重新登录',
+        '登录状态已过期或者身份异常，请重新登录',
         '系统提示',
         {
           confirmButtonText: '重新登录',
