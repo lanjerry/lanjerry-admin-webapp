@@ -12,7 +12,7 @@ export function listUser(query) {
 // 查询用户详细
 export function getUser(userId) {
   return request({
-    url: '/system/user/' + userId,
+    url: '/sys/user/' + userId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getUser(userId) {
 // 新增用户
 export function addUser(data) {
   return request({
-    url: '/system/user',
+    url: '/sys/user',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addUser(data) {
 // 修改用户
 export function updateUser(data) {
   return request({
-    url: '/system/user',
+    url: '/sys/user/' + data.userId,
     method: 'put',
     data: data
   })
@@ -38,28 +38,19 @@ export function updateUser(data) {
 // 删除用户
 export function delUser(userId) {
   return request({
-    url: '/system/user/' + userId,
+    url: '/sys/user/' + userId,
     method: 'delete'
   })
 }
 
-// 导出用户
-export function exportUser(query) {
-  return request({
-    url: '/system/user/export',
-    method: 'get',
-    params: query
-  })
-}
-
 // 用户密码重置
-export function resetUserPwd(userId, password) {
+export function resetUserPwd(id, password) {
   const data = {
-    userId,
+    id,
     password
   }
   return request({
-    url: '/system/user/resetPwd',
+    url: '/sys/user/resetPassword',
     method: 'put',
     data: data
   })
@@ -67,14 +58,10 @@ export function resetUserPwd(userId, password) {
 
 // 用户状态修改
 export function changeUserStatus(userId, status) {
-  const data = {
-    userId,
-    status
-  }
+  const url = status === 'NORMAL' ? '/sys/user/unlock/' : '/sys/user/lock/'
   return request({
-    url: '/system/user/changeStatus',
-    method: 'put',
-    data: data
+    url: url + userId,
+    method: 'put'
   })
 }
 
