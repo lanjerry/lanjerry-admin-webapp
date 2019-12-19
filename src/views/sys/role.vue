@@ -134,9 +134,10 @@
         </el-form-item>
         <el-form-item label="权限">
           <el-tree
+            ref="tree"
             :data="permissionOptions"
-            show-checkbox
-            ref="menu"
+            :expand-on-click-node="false"
+            :show-checkbox="true"
             node-key="id"
             empty-text="加载中，请稍后"
             :props="defaultProps"
@@ -227,9 +228,9 @@
       // 所有菜单节点数据
       getMenuAllCheckedKeys() {
         // 目前被选中的菜单节点
-        let checkedKeys = this.$refs.menu.getHalfCheckedKeys()
+        let checkedKeys = this.$refs.tree.getHalfCheckedKeys()
         // 半选中的菜单节点
-        let halfCheckedKeys = this.$refs.menu.getCheckedKeys()
+        let halfCheckedKeys = this.$refs.tree.getCheckedKeys()
         checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys)
         return checkedKeys
       },
@@ -237,7 +238,9 @@
       getRoleMenuTreeselect(roleId) {
         getRolePermission(roleId).then(response => {
           this.getPermissionTree()
-          this.$refs.menu.setCheckedKeys(response.data)
+          if(response.data){
+            this.$refs.tree.setCheckedKeys(response.data)
+          }
         })
       },
       // 取消按钮
@@ -300,8 +303,8 @@
       submitForm: function() {
         this.$refs['form'].validate(valid => {
           if (valid) {
+            this.form.permissionIds = this.getMenuAllCheckedKeys()
             if (this.form.roleId != undefined) {
-              this.form.permissionIds = this.getMenuAllCheckedKeys()
               updateRole(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('修改成功')
@@ -312,7 +315,6 @@
                 }
               })
             } else {
-              this.form.permissionIds = this.getMenuAllCheckedKeys()
               addRole(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('新增成功')
