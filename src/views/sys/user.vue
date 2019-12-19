@@ -2,10 +2,10 @@
   <div class="app-container">
     <!-- 查询条件 -->
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
-      <el-form-item label="id" prop="id">
+      <el-form-item label="用户编号" prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="请输入id"
+          placeholder="请输入用户编号"
           clearable
           size="small"
           style="width: 200px"
@@ -91,9 +91,9 @@
     <!-- 表格 -->
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center"/>
-      <el-table-column label="id" align="center" prop="id"/>
-      <el-table-column label="帐号" align="center" prop="account"/>
-      <el-table-column label="昵称" align="center" prop="name"/>
+      <el-table-column label="用户编号" prop="id" width="120" align="center"/>
+      <el-table-column label="帐号" prop="account" align="center"/>
+      <el-table-column label="昵称" prop="name" align="center"/>
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
@@ -209,15 +209,7 @@
 </template>
 
 <script>
-  import {
-    addUser,
-    changeUserStatus,
-    delUser,
-    getUser,
-    listUser,
-    resetUserPwd,
-    updateUser
-  } from '@/api/sys/user'
+  import { addUser, changeUserStatus, delUser, getUser, listUser, resetUserPwd, updateUser } from '@/api/sys/user'
   import { listRole } from '@/api/sys/role'
 
   export default {
@@ -248,7 +240,7 @@
         queryParams: {
           pageNum: 1,
           pageSize: 10,
-          id: null,
+          id: undefined,
           account: undefined,
           name: undefined,
           status: null
@@ -430,7 +422,7 @@
       /** 删除按钮操作 */
       handleDelete(row) {
         const userIds = row.id || this.ids
-        this.$confirm('是否确认删除id为"' + userIds + '"的用户?', '警告', {
+        this.$confirm('是否确认删除用户编号为"' + userIds + '"的数据项?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -441,7 +433,7 @@
           this.msgSuccess('删除成功')
         }).catch(function() {
         })
-      },
+      }
     }
   }
 </script>
