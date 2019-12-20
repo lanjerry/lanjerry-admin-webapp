@@ -1,58 +1,50 @@
 import request from '@/utils/request'
 
 // 查询菜单列表
-export function listMenu(query) {
+export function listPermissions(query) {
   return request({
-    url: '/system/menu/list',
+    url: '/sys/permission/list',
     method: 'get',
     params: query
   })
 }
 
 // 查询菜单详细
-export function getMenu(menuId) {
+export function getPermission(id) {
   return request({
-    url: '/system/menu/' + menuId,
-    method: 'get'
-  })
-}
-
-// 根据角色ID查询菜单下拉树结构
-export function roleMenuTreeselect(roleId) {
-  return request({
-    url: '/sys/role/permissionIds/' + roleId,
+    url: '/sys/permission/' + id,
     method: 'get'
   })
 }
 
 // 新增菜单
-export function addMenu(data) {
+export function savePermission(data) {
   return request({
-    url: '/system/menu',
+    url: '/sys/permission',
     method: 'post',
     data: data
   })
 }
 
 // 修改菜单
-export function updateMenu(data) {
+export function updatePermission(data) {
   return request({
-    url: '/system/menu',
+    url: '/sys/permission/' + data.id,
     method: 'put',
     data: data
   })
 }
 
 // 删除菜单
-export function delMenu(menuId) {
+export function removePermission(id) {
   return request({
-    url: '/system/menu/' + menuId,
+    url: '/sys/permission/' + id,
     method: 'delete'
   })
 }
 
 // 查询权限树形结构列表
-export function permissionTree() {
+export function treePermissions() {
   return request({
     url: '/sys/permission/tree',
     method: 'get'

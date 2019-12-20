@@ -58,7 +58,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:role:add']"
+          v-hasPermi="['sys:role:save']"
         >新增
         </el-button>
       </el-col>
@@ -69,7 +69,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:role:edit']"
+          v-hasPermi="['sys:role:update']"
         >修改
         </el-button>
       </el-col>
@@ -80,7 +80,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:role:remove']"
+          v-hasPermi="['sys:role:remove']"
         >删除
         </el-button>
       </el-col>
@@ -101,7 +101,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:role:edit']"
+            v-hasPermi="['sys:role:update']"
           >修改
           </el-button>
           <el-button
@@ -109,7 +109,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:role:remove']"
+            v-hasPermi="['sys:role:remove']"
           >删除
           </el-button>
         </template>
@@ -154,7 +154,7 @@
 
 <script>
   import { addRole, delRole, getRole, getRolePermission, pageRole, updateRole } from '@/api/sys/role'
-  import { permissionTree } from '@/api/sys/permission'
+  import { treePermissions } from '@/api/sys/permission'
 
   export default {
     name: 'Role',
@@ -221,12 +221,12 @@
       },
       /** 查询菜单树结构 */
       getPermissionTree() {
-        permissionTree().then(response => {
+        treePermissions().then(response => {
           this.permissionOptions = response.data
         })
       },
       // 所有菜单节点数据
-      getMenuAllCheckedKeys() {
+      getTreeAllCheckedKeys() {
         // 目前被选中的菜单节点
         let checkedKeys = this.$refs.tree.getHalfCheckedKeys()
         // 半选中的菜单节点
@@ -235,7 +235,7 @@
         return checkedKeys
       },
       /** 根据角色ID查询菜单树结构 */
-      getRoleMenuTreeselect(roleId) {
+      getRolePermissionTree(roleId) {
         getRolePermission(roleId).then(response => {
           this.getPermissionTree()
           if(response.data){
@@ -291,7 +291,7 @@
         const roleId = row.id || this.ids
         getRole(roleId).then(response => {
           this.$nextTick(() => {
-            this.getRoleMenuTreeselect(roleId)
+            this.getRolePermissionTree(roleId)
           })
           this.form = response.data
           this.form.roleId = roleId
@@ -303,7 +303,7 @@
       submitForm: function() {
         this.$refs['form'].validate(valid => {
           if (valid) {
-            this.form.permissionIds = this.getMenuAllCheckedKeys()
+            this.form.permissionIds = this.getTreeAllCheckedKeys()
             if (this.form.roleId != undefined) {
               updateRole(this.form).then(response => {
                 if (response.code === 200) {

@@ -97,7 +97,7 @@
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.status"
+            v-model="scope.row.status.enumName"
             active-value="NORMAL"
             inactive-value="LOCKING"
             @change="handleStatusChange(scope.row)"
@@ -287,9 +287,6 @@
       getList() {
         this.loading = true
         listUser(this.queryParams).then(response => {
-            response.data.records.forEach((item) => {
-              item.status = item.status.enumName
-            })
             this.userList = response.data.records
             this.total = response.data.total
             this.loading = false
@@ -304,17 +301,17 @@
       },
       // 用户状态修改
       handleStatusChange(row) {
-        let text = row.status === 'NORMAL' ? '启用' : '停用'
+        let text = row.status.enumName === 'NORMAL' ? '启用' : '停用'
         this.$confirm('确认要' + text + '“' + row.account + '”用户吗?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return changeUserStatus(row.id, row.status)
+          return changeUserStatus(row.id, row.status.enumName)
         }).then(() => {
           this.msgSuccess(text + '成功')
         }).catch(function() {
-          row.status = row.status === 'NORMAL' ? 'LOCKING' : 'NORMAL'
+          row.status.enumName = row.status.enumName === 'NORMAL' ? 'LOCKING' : 'NORMAL'
         })
       },
       // 取消按钮
