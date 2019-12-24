@@ -316,7 +316,7 @@
       this.getPageUsers()
     },
     methods: {
-      /** 查询用户列表 */
+      // 分页查询系统用户列表
       getPageUsers() {
         this.loading = true
         pageUsers(this.queryParams).then(response => {
@@ -326,13 +326,13 @@
           }
         )
       },
-      /** 查询角色列表 */
+      // 查询角色列表
       getRoles() {
         listRole().then(response => {
           this.roleOptions = response.data
         })
       },
-      // 用户状态修改
+      // 锁定或者解锁系统用户
       handleStatusChange(row) {
         let text = row.status.value == '1' ? '启用' : '停用'
         this.$confirm('确认要' + text + '“' + row.account + '”用户吗?', '警告', {
@@ -367,12 +367,12 @@
         }
         this.resetForm('form')
       },
-      /** 搜索按钮操作 */
+      // 搜索按钮操作
       handleQuery() {
         this.queryParams.pageNum = 1
         this.getPageUsers()
       },
-      /** 重置按钮操作 */
+      // 重置按钮操作
       resetQuery() {
         this.resetForm('queryForm')
         this.handleQuery()
@@ -383,14 +383,14 @@
         this.single = selection.length != 1
         this.multiple = !selection.length
       },
-      /** 新增按钮操作 */
+      // 新增按钮操作
       handleAdd() {
         this.reset()
         this.getRoles()
         this.open = true
         this.title = '添加用户'
       },
-      /** 修改按钮操作 */
+      // 修改按钮操作
       handleUpdate(row) {
         this.reset()
         this.getRoles()
@@ -406,7 +406,7 @@
           this.form.password = ''
         })
       },
-      /** 重置密码按钮操作 */
+      // 重置密码按钮操作
       handleResetPwd(row) {
         this.$prompt('请输入"' + row.name + '"的新密码', '提示', {
           confirmButtonText: '确定',
@@ -429,7 +429,7 @@
         }).catch(() => {
         })
       },
-      /** 提交按钮 */
+      // 提交按钮
       submitForm: function() {
         this.$refs['form'].validate(valid => {
           if (valid) {
@@ -453,7 +453,7 @@
           }
         })
       },
-      /** 删除按钮操作 */
+      // 删除按钮操作
       handleDelete(row) {
         const ids = row.id || this.ids
         this.$confirm('是否确认删除用户编号为"' + ids + '"的数据项?', '警告', {

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询用户列表
+// 分页查询系统用户列表
 export function pageUsers(query) {
   return request({
     url: '/sys/user/page',
@@ -9,7 +9,7 @@ export function pageUsers(query) {
   })
 }
 
-// 查询用户详细
+// 根据用户编号查询用户信息
 export function getUser(id) {
   return request({
     url: '/sys/user/' + id,
@@ -17,7 +17,7 @@ export function getUser(id) {
   })
 }
 
-// 新增用户
+// 新增系统用户
 export function saveUser(data) {
   return request({
     url: '/sys/user',
@@ -26,7 +26,7 @@ export function saveUser(data) {
   })
 }
 
-// 修改用户
+// 更新系统用户
 export function updateUser(data) {
   return request({
     url: '/sys/user/' + data.id,
@@ -35,7 +35,7 @@ export function updateUser(data) {
   })
 }
 
-// 删除用户
+// 删除系统用户
 export function removeUsers(ids) {
   return request({
     url: '/sys/user/' + ids,
@@ -43,7 +43,7 @@ export function removeUsers(ids) {
   })
 }
 
-// 用户状态修改
+// 锁定或者解锁系统用户
 export function changeUserStatus(id, status) {
   const url = status == '1' ? '/sys/user/unlock/' : '/sys/user/lock/'
   return request({
@@ -52,7 +52,7 @@ export function changeUserStatus(id, status) {
   })
 }
 
-// 用户密码重置
+// 重置系统用户密码
 export function resetUserPwd(data) {
   return request({
     url: '/sys/user/resetPassword',
