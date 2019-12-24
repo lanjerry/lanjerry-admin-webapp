@@ -43,9 +43,9 @@ export function removeUsers(ids) {
   })
 }
 
-// 锁定或者解锁系统用户
+// 启用或者停用系统用户
 export function changeUserStatus(id, status) {
-  const url = status == '1' ? '/sys/user/unlock/' : '/sys/user/lock/'
+  const url = status == '1' ? '/sys/user/enable/' : '/sys/user/disable/'
   return request({
     url: url + id,
     method: 'put'

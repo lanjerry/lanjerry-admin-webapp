@@ -1,15 +1,14 @@
 import request from '@/utils/request'
 
-// 查询菜单列表
-export function listPermissions(query) {
+// 查询系统权限列表
+export function listPermissions() {
   return request({
     url: '/sys/permission/list',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 
-// 查询菜单详细
+// 根据权限编号查询系统权限信息
 export function getPermission(id) {
   return request({
     url: '/sys/permission/' + id,
@@ -17,7 +16,7 @@ export function getPermission(id) {
   })
 }
 
-// 新增菜单
+// 新增系统权限
 export function savePermission(data) {
   return request({
     url: '/sys/permission',
@@ -26,7 +25,7 @@ export function savePermission(data) {
   })
 }
 
-// 修改菜单
+// 更新系统权限
 export function updatePermission(data) {
   return request({
     url: '/sys/permission/' + data.id,
@@ -35,7 +34,7 @@ export function updatePermission(data) {
   })
 }
 
-// 删除菜单
+// 删除系统权限
 export function removePermission(id) {
   return request({
     url: '/sys/permission/' + id,
@@ -43,7 +42,16 @@ export function removePermission(id) {
   })
 }
 
-// 查询权限树形结构列表
+// 启用或者停用系统权限
+export function changePermissionStatus(id, status) {
+  const url = status == '1' ? '/sys/permission/enable/' : '/sys/permission/disable/'
+  return request({
+    url: url + id,
+    method: 'put'
+  })
+}
+
+// 查询树形结构系统权限列表
 export function treePermissions() {
   return request({
     url: '/sys/permission/tree',

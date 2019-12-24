@@ -243,14 +243,14 @@
         statusOptions: [
           {
             value: 1,
-            label: '正常'
+            label: '启用'
           },
           {
             value: 2,
-            label: '冻结'
+            label: '停用'
           }
         ],
-        // 性别状态字典
+        // 性别数据字典
         sexOptions: [
           {
             value: 1,
