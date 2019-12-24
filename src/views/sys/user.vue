@@ -42,8 +42,12 @@
           @change="handleQuery"
         >
           <el-option label="请选择状态" :value="null"></el-option>
-          <el-option label="正常" :value="'NORMAL'"></el-option>
-          <el-option label="冻结" :value="'LOCKING'"></el-option>
+          <el-option
+            v-for="status in statusOptions"
+            :key="status.value"
+            :label="status.label"
+            :value="status.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -91,15 +95,15 @@
     <!-- 表格 -->
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center"/>
-      <el-table-column label="用户编号" prop="id" width="120" align="center"/>
-      <el-table-column label="帐号" prop="account" align="center"/>
-      <el-table-column label="昵称" prop="name" align="center"/>
+      <el-table-column prop="id" label="用户编号" width="120" align="center"/>
+      <el-table-column prop="account" label="帐号" align="center"/>
+      <el-table-column prop="name" label="昵称" align="center"/>
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.status.enumName"
-            active-value="NORMAL"
-            inactive-value="LOCKING"
+            v-model="scope.row.status.value"
+            :active-value="1"
+            :inactive-value="2"
             @change="handleStatusChange(scope.row)"
           ></el-switch>
         </template>
@@ -109,12 +113,8 @@
           <el-tag v-for="role in scope.row.roles">{{ role }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="创建人" align="center" prop="creatorName"/>
-      <el-table-column label="创建时间" align="center" prop="createdTime" width="160">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createdTime) }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="creatorName" label="创建人" align="center"/>
+      <el-table-column prop="createdTime" label="创建时间" align="center"/>
       <el-table-column
         label="操作"
         align="center"
@@ -155,16 +155,16 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
+      @pagination="getPageUsers"
     />
 
     <!-- 添加或修改用户框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="账号" prop="account">
-          <el-input :disabled="form.userId != undefined" v-model="form.account" placeholder="请输入账号"/>
+          <el-input :disabled="form.id != undefined" v-model="form.account" placeholder="请输入账号"/>
         </el-form-item>
-        <el-form-item v-if="form.userId == undefined" label="密码" prop="password">
+        <el-form-item v-if="!form.id" label="密码" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码" type="password"/>
         </el-form-item>
         <el-form-item label="昵称" prop="name">
@@ -172,9 +172,12 @@
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-radio-group v-model="form.sex">
-            <el-radio class="radio" label="MALE">男</el-radio>
-            <el-radio class="radio" label="FEMALE">女</el-radio>
-            <el-radio class="radio" label="UNKNOWN">未知</el-radio>
+            <el-radio
+              v-for="sex in sexOptions"
+              :key="sex.value"
+              :label="sex.value"
+            >{{sex.label}}
+            </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
@@ -185,31 +188,35 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="form.status">
-            <el-radio class="radio" label="NORMAL">正常</el-radio>
-            <el-radio class="radio" label="LOCKING">冻结</el-radio>
+            <el-radio
+              v-for="status in statusOptions"
+              :key="status.value"
+              :label="status.value"
+            >{{status.label}}
+            </el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
           <el-select v-model="form.roleIds" multiple placeholder="请选择">
             <el-option
-              v-for="item in roleOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+              v-for="role in roleOptions"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
             ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-  import { addUser, changeUserStatus, delUser, getUser, listUser, resetUserPwd, updateUser } from '@/api/sys/user'
+  import { pageUsers, getUser, saveUser, updateUser, removeUsers, changeUserStatus, resetUserPwd } from '@/api/sys/user'
   import { listRole } from '@/api/sys/role'
 
   export default {
@@ -232,6 +239,32 @@
         title: '',
         // 是否显示弹出层
         open: false,
+        // 状态数据字典
+        statusOptions: [
+          {
+            value: 1,
+            label: '正常'
+          },
+          {
+            value: 2,
+            label: '冻结'
+          }
+        ],
+        // 性别状态字典
+        sexOptions: [
+          {
+            value: 1,
+            label: '男'
+          },
+          {
+            value: 2,
+            label: '女'
+          },
+          {
+            value: 3,
+            label: '未知'
+          }
+        ],
         // 角色选项
         roleOptions: [],
         // 表单参数
@@ -280,13 +313,13 @@
       }
     },
     created() {
-      this.getList()
+      this.getPageUsers()
     },
     methods: {
       /** 查询用户列表 */
-      getList() {
+      getPageUsers() {
         this.loading = true
-        listUser(this.queryParams).then(response => {
+        pageUsers(this.queryParams).then(response => {
             this.userList = response.data.records
             this.total = response.data.total
             this.loading = false
@@ -301,17 +334,17 @@
       },
       // 用户状态修改
       handleStatusChange(row) {
-        let text = row.status.enumName === 'NORMAL' ? '启用' : '停用'
+        let text = row.status.value == '1' ? '启用' : '停用'
         this.$confirm('确认要' + text + '“' + row.account + '”用户吗?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return changeUserStatus(row.id, row.status.enumName)
+          return changeUserStatus(row.id, row.status.value)
         }).then(() => {
           this.msgSuccess(text + '成功')
         }).catch(function() {
-          row.status.enumName = row.status.enumName === 'NORMAL' ? 'LOCKING' : 'NORMAL'
+          row.status.value = row.status.value == '1' ? 2 : 1
         })
       },
       // 取消按钮
@@ -322,14 +355,14 @@
       // 表单重置
       reset() {
         this.form = {
-          userId: undefined,
+          id: undefined,
           account: undefined,
           password: undefined,
           name: undefined,
-          sex: 'MALE',
+          sex: 1,
           email: undefined,
           phone: undefined,
-          status: 'NORMAL',
+          status: 1,
           roleIds: []
         }
         this.resetForm('form')
@@ -337,7 +370,7 @@
       /** 搜索按钮操作 */
       handleQuery() {
         this.queryParams.pageNum = 1
-        this.getList()
+        this.getPageUsers()
       },
       /** 重置按钮操作 */
       resetQuery() {
@@ -361,12 +394,12 @@
       handleUpdate(row) {
         this.reset()
         this.getRoles()
-        const userId = row.id || this.ids
-        getUser(userId).then(response => {
+        const id = row.id || this.ids
+        getUser(id).then(response => {
           this.form = response.data
-          this.form.userId = userId
-          this.form.sex = response.data.sex.enumName
-          this.form.status = response.data.status.enumName
+          this.form.id = id
+          this.form.sex = response.data.sex.value
+          this.form.status = response.data.status.value
           this.form.roleIds = response.data.roleIds
           this.open = true
           this.title = '修改用户'
@@ -382,7 +415,11 @@
           inputPlaceholder: '请输入新密码',
           inputErrorMessage: '新密码不能为空'
         }).then(({ value }) => {
-          resetUserPwd(row.id, value).then(response => {
+          const data = {
+            id: row.id,
+            password: value
+          }
+          resetUserPwd(data).then(response => {
             if (response.code === 200) {
               this.msgSuccess('修改成功，新密码是：' + value)
             } else {
@@ -396,20 +433,20 @@
       submitForm: function() {
         this.$refs['form'].validate(valid => {
           if (valid) {
-            if (this.form.userId != undefined) {
+            if (this.form.id != undefined) {
               updateUser(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('修改成功')
                   this.open = false
-                  this.getList()
+                  this.getPageUsers()
                 }
               })
             } else {
-              addUser(this.form).then(response => {
+              saveUser(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('新增成功')
                   this.open = false
-                  this.getList()
+                  this.getPageUsers()
                 }
               })
             }
@@ -418,15 +455,15 @@
       },
       /** 删除按钮操作 */
       handleDelete(row) {
-        const userIds = row.id || this.ids
-        this.$confirm('是否确认删除用户编号为"' + userIds + '"的数据项?', '警告', {
+        const ids = row.id || this.ids
+        this.$confirm('是否确认删除用户编号为"' + ids + '"的数据项?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return delUser(userIds)
+          return removeUsers(ids)
         }).then(() => {
-          this.getList()
+          this.getPageUsers()
           this.msgSuccess('删除成功')
         }).catch(function() {
         })
