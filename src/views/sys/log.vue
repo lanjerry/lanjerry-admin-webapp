@@ -61,8 +61,12 @@
           @change="handleQuery"
         >
           <el-option label="请选择状态" :value="null"></el-option>
-          <el-option label="成功" :value="'SUCCESS'"></el-option>
-          <el-option label="失败" :value="'FAIL'"></el-option>
+          <el-option
+            v-for="status in statusOptions"
+            :key="status.value"
+            :label="status.label"
+            :value="status.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间">
@@ -92,26 +96,27 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['monitor:operlog:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="日志编号" align="center" prop="id" />
-      <el-table-column label="用户账号" align="center" prop="userAccount" />
-      <el-table-column label="ip地址" align="center" prop="ipAddress" />
-      <el-table-column label="请求地址" align="center" prop="requestUri" />
-      <el-table-column label="请求方式" align="center" prop="requestMethod" />
-      <el-table-column label="操作方法" align="center" prop="classMethod" width="130" :show-overflow-tooltip="true" />
-      <el-table-column label="动作名称" align="center" prop="actionName" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="日志编号" align="center" prop="id"/>
+      <el-table-column label="用户账号" align="center" prop="userAccount"/>
+      <el-table-column label="ip地址" align="center" prop="ipAddress"/>
+      <el-table-column label="请求地址" align="center" prop="requestUri"/>
+      <el-table-column label="请求方式" align="center" prop="requestMethod"/>
+      <el-table-column label="操作方法" align="center" prop="classMethod" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column label="动作名称" align="center" prop="actionName"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <span>{{ scope.row.status.desc }}</span>
+          <span>{{ scope.row.status.text }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="执行时间（秒）" align="center" prop="executionTime" />
-      <el-table-column label="操作时间" align="center" width="180" prop="createdTime" />
+      <el-table-column label="执行时间（秒）" align="center" prop="executionTime"/>
+      <el-table-column label="操作时间" align="center" width="180" prop="createdTime"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -120,7 +125,8 @@
             icon="el-icon-view"
             @click="handleView(scope.row,scope.index)"
             v-hasPermi="['monitor:operlog:query']"
-          >详细</el-button>
+          >详细
+          </el-button>
           <el-button
             size="mini"
             type="text"
@@ -167,16 +173,17 @@
             <el-form-item label="请求参数：">{{ form.requestParams }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态：">{{ form.status.desc }}</el-form-item>
+            <el-form-item label="状态：">{{ form.status.text }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="操作时间：">{{ form.createdTime }} </el-form-item>
+            <el-form-item label="操作时间：">{{ form.createdTime }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="执行时间：" v-if="form.status.enumName === 'SUCCESS'">{{ form.executionTime }} 秒</el-form-item>
+            <el-form-item label="执行时间：" v-if="form.status.value == 1">{{ form.executionTime }} 秒
+            </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="异常信息：" v-if="form.status.enumName === 'FAIL'">{{ form.exceptionMsg }}</el-form-item>
+            <el-form-item label="异常信息：" v-if="form.status.value == 2">{{ form.exceptionMsg }}</el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -188,96 +195,108 @@
 </template>
 
 <script>
-import { pageLogs, removLogs, getLog } from "@/api/sys/log";
+  import { pageLogs, getLog, removLogs } from '@/api/sys/log'
 
-export default {
-  name: 'Log',
-  data() {
-    return {
-      // 遮罩层
-      loading: true,
-      // 选中数组
-      ids: [],
-      // 非多个禁用
-      multiple: true,
-      // 总条数
-      total: 0,
-      // 表格数据
-      list: [],
-      // 是否显示弹出层
-      open: false,
-      // 日期范围
-      dateRange: [],
-      // 表单参数
-      form: {
-        status:{}
-      },
-      // 查询参数
-      queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        userId: undefined,
-        ipAddress: undefined,
-        requestUri: undefined,
-        requestMethod: undefined,
-        actionName: undefined,
-        status: null
-      }
-    };
-  },
-  created() {
-    this.getList();
-  },
-  methods: {
-    /** 查询登录日志 */
-    getList() {
-      this.loading = true;
-      pageLogs(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
-          this.list = response.data.records
-          this.total = response.data.total
-          this.loading = false;
+  export default {
+    name: 'SysLog',
+    data() {
+      return {
+        // 遮罩层
+        loading: true,
+        // 选中数组
+        ids: [],
+        // 非多个禁用
+        multiple: true,
+        // 总条数
+        total: 0,
+        // 表格数据
+        list: [],
+        // 是否显示弹出层
+        open: false,
+        // 日期范围
+        dateRange: [],
+        // 状态数据字典
+        statusOptions: [
+          {
+            value: 1,
+            label: '成功'
+          },
+          {
+            value: 2,
+            label: '失败'
+          }
+        ],
+        // 表单参数
+        form: {
+          status: {}
+        },
+        // 查询参数
+        queryParams: {
+          pageNum: 1,
+          pageSize: 10,
+          userId: undefined,
+          ipAddress: undefined,
+          requestUri: undefined,
+          requestMethod: undefined,
+          actionName: undefined,
+          status: null
         }
-      );
+      }
     },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+    created() {
+      this.getList()
     },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.multiple = !selection.length
-    },
-    /** 详细按钮操作 */
-    handleView(row) {
-      const logId = row.id || this.ids
-      getLog(logId).then(response => {
-        this.open = true;
-        this.form = response.data;
-      })
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const operIds = row.id || this.ids;
-      this.$confirm('是否确认删除日志编号为"' + operIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+    methods: {
+      /** 查询登录日志 */
+      getList() {
+        this.loading = true
+        pageLogs(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+            this.list = response.data.records
+            this.total = response.data.total
+            this.loading = false
+          }
+        )
+      },
+      /** 搜索按钮操作 */
+      handleQuery() {
+        this.queryParams.pageNum = 1
+        this.getList()
+      },
+      /** 重置按钮操作 */
+      resetQuery() {
+        this.dateRange = []
+        this.resetForm('queryForm')
+        this.handleQuery()
+      },
+      // 多选框选中数据
+      handleSelectionChange(selection) {
+        this.ids = selection.map(item => item.id)
+        this.multiple = !selection.length
+      },
+      /** 详细按钮操作 */
+      handleView(row) {
+        const logId = row.id || this.ids
+        getLog(logId).then(response => {
+          this.open = true
+          this.form = response.data
+        })
+      },
+      /** 删除按钮操作 */
+      handleDelete(row) {
+        const operIds = row.id || this.ids
+        this.$confirm('是否确认删除日志编号为"' + operIds + '"的数据项?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }).then(function() {
-          return removLogs(operIds);
+          return removLogs(operIds)
         }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        }).catch(function() {});
-    },
+          this.getList()
+          this.msgSuccess('删除成功')
+        }).catch(function() {
+        })
+      }
+    }
   }
-};
 </script>
 

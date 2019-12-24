@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询分页日志列表
+// 分页查询系统日志列表
 export function pageLogs(query) {
   return request({
     url: '/sys/log/page',
@@ -9,7 +9,7 @@ export function pageLogs(query) {
   })
 }
 
-// 查询日志详细
+// 根据日志编号查询日志信息
 export function getLog(id) {
   return request({
     url: '/sys/log/' + id,
@@ -17,10 +17,10 @@ export function getLog(id) {
   })
 }
 
-// 删除操作日志
-export function removLogs(operId) {
+// 删除系统日志
+export function removLogs(ids) {
   return request({
-    url: '/sys/log/' + operId,
+    url: '/sys/log/' + ids,
     method: 'delete'
   })
 }
