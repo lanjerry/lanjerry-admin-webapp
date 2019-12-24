@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-// 分页查询角色列表
-export function pageRole(query) {
+// 分页查询系统角色列表
+export function pageRoles(query) {
   return request({
     url: '/sys/role/page',
     method: 'get',
@@ -9,16 +9,16 @@ export function pageRole(query) {
   })
 }
 
-// 查询角色详细
-export function getRole(roleId) {
+// 根据角色编号查询角色信息
+export function getRole(id) {
   return request({
-    url: '/sys/role/' + roleId,
+    url: '/sys/role/' + id,
     method: 'get'
   })
 }
 
-// 新增角色
-export function addRole(data) {
+// 新增系统角色
+export function saveRole(data) {
   return request({
     url: '/sys/role',
     method: 'post',
@@ -26,32 +26,32 @@ export function addRole(data) {
   })
 }
 
-// 修改角色
+// 更新系统角色
 export function updateRole(data) {
   return request({
-    url: '/sys/role/' + data.roleId,
+    url: '/sys/role/' + data.id,
     method: 'put',
     data: data
   })
 }
 
-// 删除角色
-export function delRole(roleId) {
+// 删除系统角色
+export function removeRoles(ids) {
   return request({
-    url: '/sys/role/' + roleId,
+    url: '/sys/role/' + ids,
     method: 'delete'
   })
 }
 
-// 查询角色权限编号集
-export function getRolePermission(roleId) {
+// 根据角色编号查询角色的权限编号集
+export function getRolePermissionIds(id) {
   return request({
-    url: '/sys/role/permissionIds/' + roleId,
+    url: '/sys/role/permissionIds/' + id,
     method: 'get'
   })
 }
 
-// 查询角色列表
+// 查询系统角色列表
 export function listRole() {
   return request({
     url: '/sys/role/list',

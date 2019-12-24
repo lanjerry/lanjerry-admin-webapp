@@ -220,7 +220,7 @@
   import { listRole } from '@/api/sys/role'
 
   export default {
-    name: 'User',
+    name: 'SysUser',
     data() {
       return {
         // 遮罩层

@@ -89,11 +89,11 @@
     <!-- 表格 -->
     <el-table v-loading="loading" :data="roleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="角色编号" prop="id"/>
-      <el-table-column label="角色名称" prop="name"/>
-      <el-table-column label="权限标识" prop="permissionTag"/>
-      <el-table-column label="创建人" prop="creatorName"/>
-      <el-table-column label="创建时间" prop="createdTime"/>
+      <el-table-column prop="id" label="角色编号"/>
+      <el-table-column prop="name" label="角色名称"/>
+      <el-table-column prop="permissionTag" label="权限标识"/>
+      <el-table-column prop="creatorName" label="创建人"/>
+      <el-table-column prop="createdTime" label="创建时间"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -120,14 +120,14 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
+      @pagination="getPageRoles"
     />
 
     <!-- 添加或修改角色配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="角色名称" prop="name">
-          <el-input :disabled="form.roleId != undefined" v-model="form.name" placeholder="请输入角色名称"/>
+          <el-input :disabled="form.id != undefined" v-model="form.name" placeholder="请输入角色名称"/>
         </el-form-item>
         <el-form-item label="权限标识" prop="permissionTag">
           <el-input v-model="form.permissionTag" placeholder="请输入权限标识"/>
@@ -153,11 +153,11 @@
 </template>
 
 <script>
-  import { addRole, delRole, getRole, getRolePermission, pageRole, updateRole } from '@/api/sys/role'
+  import { pageRoles, getRole, saveRole, updateRole, removeRoles, getRolePermissionIds } from '@/api/sys/role'
   import { treePermissions } from '@/api/sys/permission'
 
   export default {
-    name: 'Role',
+    name: 'SysRole',
     data() {
       return {
         // 遮罩层
@@ -206,21 +206,21 @@
       }
     },
     created() {
-      this.getList()
+      this.getPageRoles()
     },
     methods: {
-      /** 查询角色列表 */
-      getList() {
+      // 分页查询系统角色列表
+      getPageRoles() {
         this.loading = true
-        pageRole(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        pageRoles(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
             this.roleList = response.data.records
             this.total = response.data.total
             this.loading = false
           }
         )
       },
-      /** 查询菜单树结构 */
-      getPermissionTree() {
+      // 查询树形结构系统权限列表
+      getTreePermissions() {
         treePermissions().then(response => {
           this.permissionOptions = response.data
         })
@@ -234,11 +234,11 @@
         checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys)
         return checkedKeys
       },
-      /** 根据角色ID查询菜单树结构 */
-      getRolePermissionTree(roleId) {
-        getRolePermission(roleId).then(response => {
-          this.getPermissionTree()
-          if(response.data){
+      // 根据角色编号查询角色的权限编号集
+      getRolePermissionTree(id) {
+        getRolePermissionIds(id).then(response => {
+          this.getTreePermissions()
+          if (response.data) {
             this.$refs.tree.setCheckedKeys(response.data)
           }
         })
@@ -254,19 +254,19 @@
           this.$refs.tree.setCheckedKeys([])
         }
         this.form = {
-          roleId: undefined,
+          id: undefined,
           name: undefined,
           permissionTag: undefined,
           permissionIds: []
         }
         this.resetForm('form')
       },
-      /** 搜索按钮操作 */
+      // 搜索按钮操作
       handleQuery() {
         this.queryParams.pageNum = 1
-        this.getList()
+        this.getPageRoles()
       },
-      /** 重置按钮操作 */
+      // 重置按钮操作
       resetQuery() {
         this.dateRange = []
         this.resetForm('queryForm')
@@ -278,48 +278,48 @@
         this.single = selection.length != 1
         this.multiple = !selection.length
       },
-      /** 新增按钮操作 */
+      // 新增按钮操作
       handleAdd() {
         this.reset()
-        this.getPermissionTree()
+        this.getTreePermissions()
         this.open = true
         this.title = '添加角色'
       },
-      /** 修改按钮操作 */
+      // 修改按钮操作
       handleUpdate(row) {
         this.reset()
-        const roleId = row.id || this.ids
-        getRole(roleId).then(response => {
+        const id = row.id || this.ids
+        getRole(id).then(response => {
           this.$nextTick(() => {
-            this.getRolePermissionTree(roleId)
+            this.getRolePermissionTree(id)
           })
           this.form = response.data
-          this.form.roleId = roleId
+          this.form.id = id
           this.open = true
           this.title = '修改角色'
         })
       },
-      /** 提交按钮 */
+      // 提交按钮
       submitForm: function() {
         this.$refs['form'].validate(valid => {
           if (valid) {
             this.form.permissionIds = this.getTreeAllCheckedKeys()
-            if (this.form.roleId != undefined) {
+            if (this.form.id != undefined) {
               updateRole(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('修改成功')
                   this.open = false
-                  this.getList()
+                  this.getPageRoles()
                 } else {
                   this.msgError(response.msg)
                 }
               })
             } else {
-              addRole(this.form).then(response => {
+              saveRole(this.form).then(response => {
                 if (response.code === 200) {
                   this.msgSuccess('新增成功')
                   this.open = false
-                  this.getList()
+                  this.getPageRoles()
                 } else {
                   this.msgError(response.msg)
                 }
@@ -328,7 +328,7 @@
           }
         })
       },
-      /** 删除按钮操作 */
+      // 删除按钮操作
       handleDelete(row) {
         const roleIds = row.id || this.ids
         this.$confirm('是否确认删除角色编号为"' + roleIds + '"的数据项?', '警告', {
@@ -336,9 +336,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return delRole(roleIds)
+          return removeRoles(roleIds)
         }).then(() => {
-          this.getList()
+          this.getPageRoles()
           this.msgSuccess('删除成功')
         }).catch(function() {
         })
