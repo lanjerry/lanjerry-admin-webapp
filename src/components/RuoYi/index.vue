@@ -9,7 +9,7 @@ export default {
   name: 'RuoYi',
   data() {
     return {
-      url: 'https://gitee.com/y_project/RuoYi-Vue'
+      url: 'https://gitee.com/lanjerry/lanjerry-admin-webapp'
     }
   },
   methods: {

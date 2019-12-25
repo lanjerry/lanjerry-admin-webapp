@@ -286,6 +286,9 @@
           password: [
             { required: true, message: '密码不能为空', trigger: 'blur' }
           ],
+          name: [
+            { required: true, message: '昵称不能为空', trigger: 'blur' }
+          ],
           sex: [
             { required: true, message: '请选择性别', trigger: 'change' }
           ],
