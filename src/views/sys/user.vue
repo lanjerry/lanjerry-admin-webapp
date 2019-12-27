@@ -94,10 +94,10 @@
 
     <!-- 表格 -->
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50" align="center"/>
-      <el-table-column prop="id" label="用户编号" width="120" align="center"/>
-      <el-table-column prop="account" label="帐号" align="center"/>
-      <el-table-column prop="name" label="昵称" align="center"/>
+      <el-table-column type="selection" />
+      <el-table-column prop="id" label="用户编号" />
+      <el-table-column prop="account" label="帐号" />
+      <el-table-column prop="name" label="昵称" />
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
@@ -113,12 +113,13 @@
           <el-tag v-for="role in scope.row.roles">{{ role }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="creatorName" label="创建人" align="center"/>
-      <el-table-column prop="createdTime" label="创建时间" align="center"/>
+      <el-table-column prop="loginIp" label="最后登陆IP" />
+      <el-table-column prop="loginTime" label="最后登陆时间" />
+      <el-table-column prop="creatorName" label="创建人" />
+      <el-table-column prop="createdTime" label="创建时间" />
       <el-table-column
         label="操作"
         align="center"
-        width="200"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">

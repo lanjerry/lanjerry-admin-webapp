@@ -102,21 +102,25 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="日志编号" align="center" prop="id"/>
-      <el-table-column label="用户账号" align="center" prop="userAccount"/>
-      <el-table-column label="ip地址" align="center" prop="ipAddress"/>
-      <el-table-column label="请求地址" align="center" prop="requestUri"/>
-      <el-table-column label="请求方式" align="center" prop="requestMethod"/>
-      <el-table-column label="操作方法" align="center" prop="classMethod" width="130" :show-overflow-tooltip="true"/>
-      <el-table-column label="动作名称" align="center" prop="actionName"/>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column type="selection" />
+      <el-table-column prop="id" label="日志编号" />
+      <el-table-column prop="userAccount" label="用户账号" />
+      <el-table-column prop="ipAddress" label="ip地址" />
+      <el-table-column prop="requestUri" label="请求地址" />
+      <el-table-column prop="requestMethod" label="请求方式" />
+      <el-table-column prop="classMethod" label="操作方法" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column prop="actionName" label="动作名称" />
+      <el-table-column prop="status" label="状态" >
         <template slot-scope="scope">
           <span>{{ scope.row.status.text }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="执行时间（秒）" align="center" prop="executionTime"/>
-      <el-table-column label="操作时间" align="center" width="180" prop="createdTime"/>
+      <el-table-column label="执行时间" align="center">
+        <template slot-scope="scope" v-if="scope.row.status.value == 1">
+          <el-tag type="danger">{{ scope.row.executionTime }}秒</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createdTime" label="操作时间" align="center" width="180" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -179,7 +183,8 @@
             <el-form-item label="操作时间：">{{ form.createdTime }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="执行时间：" v-if="form.status.value == 1">{{ form.executionTime }} 秒
+            <el-form-item label="执行时间：" v-if="form.status.value == 1">
+              <el-tag type="danger">{{ form.executionTime }}秒</el-tag>
             </el-form-item>
           </el-col>
           <el-col :span="24">

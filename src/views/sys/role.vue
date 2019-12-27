@@ -88,7 +88,7 @@
 
     <!-- 表格 -->
     <el-table v-loading="loading" :data="roleList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="selection" />
       <el-table-column prop="id" label="角色编号"/>
       <el-table-column prop="name" label="角色名称"/>
       <el-table-column prop="permissionTag" label="权限标识"/>
