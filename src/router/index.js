@@ -78,19 +78,6 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
-  },
-  {
-    path: '/dict',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'type/data/:dictId(\\d+)',
-        component: () => import('@/views/system/dict/data'),
-        name: '字典数据',
-        meta: { title: '字典数据', icon: '' }
-      }
-    ]
   }
 ]
 
