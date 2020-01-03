@@ -60,7 +60,7 @@
 import userAvatar from "./userAvatar";
 import userInfo from "./userInfo";
 import resetPwd from "./userResetPwd";
-import { getUserProfile } from "@/api/global/currentUser";
+import { getUserProfile } from "@/api/common/currentUser";
 
 export default {
   name: "UserProfile",
