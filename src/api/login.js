@@ -15,14 +15,6 @@ export function login(account, password, captchaCode, captchaKey) {
   })
 }
 
-// 获取用户详细信息
-export function getInfo() {
-  return request({
-    url: '/sys/user/info',
-    method: 'get'
-  })
-}
-
 // 退出方法
 export function logout() {
   return request({

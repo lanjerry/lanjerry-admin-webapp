@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+// 获取用户详细信息
+export function getInfo() {
+  return request({
+    url: '/sys/user/info',
+    method: 'get'
+  })
+}
+
 // 查询当前登录用户基本资料
 export function getUserProfile() {
   return request({
