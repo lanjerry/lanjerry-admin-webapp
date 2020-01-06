@@ -5,7 +5,7 @@
 
       <div class="drawer-item">
         <span>主题颜色</span>
-        <global-theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
+        <right-theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
       </div>
 
       <div class="drawer-item">
@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import GlobalThemePicker from '@/components/global/ThemePicker'
+import RightThemePicker from '@/components/layout/right/ThemePicker'
 
 export default {
-  components: { GlobalThemePicker },
+  components: { RightThemePicker },
   data() {
     return {}
   },

@@ -1,22 +1,22 @@
 <template>
   <div class="navbar">
-    <global-hamburger id="global-hamburger" :is-active="sidebar.opened" class="hamburger-container"
+    <nav-hamburger id="nav-hamburger" :is-active="sidebar.opened" class="hamburger-container"
                       @toggleClick="toggleSideBar"/>
 
-    <global-breadcrumb id="global-breadcrumb" class="breadcrumb-container"/>
+    <nav-breadcrumb id="nav-breadcrumb" class="breadcrumb-container"/>
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <global-header-search id="global-header-search" class="right-menu-item"/>
+        <nav-header-search id="nav-header-search" class="right-menu-item"/>
 
         <el-tooltip content="下载源码" effect="dark" placement="bottom">
-          <global-lanjerry id="global-lanjerry" class="right-menu-item hover-effect"/>
+          <nav-lanjerry id="nav-lanjerry" class="right-menu-item hover-effect"/>
         </el-tooltip>
 
-        <global-screenfull id="global-screenfull" class="right-menu-item hover-effect"/>
+        <nav-screenfull id="nav-screenfull" class="right-menu-item hover-effect"/>
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <global-size-select id="global-size-select" class="right-menu-item hover-effect"/>
+          <nav-size-select id="nav-size-select" class="right-menu-item hover-effect"/>
         </el-tooltip>
 
       </template>
@@ -44,21 +44,21 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import GlobalHamburger from '@/components/global/Hamburger'
-  import GlobalBreadcrumb from '@/components/global/Breadcrumb'
-  import GlobalHeaderSearch from '@/components/global/HeaderSearch'
-  import GlobalLanjerry from '@/components/global/Lanjerry'
-  import GlobalScreenfull from '@/components/global/Screenfull'
-  import GlobalSizeSelect from '@/components/global/SizeSelect'
+  import NavHamburger from '@/components/layout/navbar/Hamburger'
+  import NavBreadcrumb from '@/components/layout/navbar/Breadcrumb'
+  import NavHeaderSearch from '@/components/layout/navbar/HeaderSearch'
+  import NavLanjerry from '@/components/layout/navbar/Lanjerry'
+  import NavScreenfull from '@/components/layout/navbar/Screenfull'
+  import NavSizeSelect from '@/components/layout/navbar/SizeSelect'
 
   export default {
     components: {
-      GlobalHamburger,
-      GlobalBreadcrumb,
-      GlobalHeaderSearch,
-      GlobalLanjerry,
-      GlobalScreenfull,
-      GlobalSizeSelect
+      NavHamburger,
+      NavBreadcrumb,
+      NavHeaderSearch,
+      NavLanjerry,
+      NavScreenfull,
+      NavSizeSelect
     },
     computed: {
       ...mapGetters([
