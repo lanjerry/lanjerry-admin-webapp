@@ -15,7 +15,7 @@
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="icon" label="权限名称">
+      <el-table-column prop="icon" label="权限名称" width="300">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon"/>
           {{scope.row.name}}
