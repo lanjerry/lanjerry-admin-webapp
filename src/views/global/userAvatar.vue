@@ -54,7 +54,7 @@
 <script>
   import store from "@/store";
   import { VueCropper } from "vue-cropper";
-  import { uploadAvatar } from "@/api/common/currentUser";
+  import { uploadAvatar } from "@/api/global/currentUser";
 
   export default {
     components: { VueCropper },
