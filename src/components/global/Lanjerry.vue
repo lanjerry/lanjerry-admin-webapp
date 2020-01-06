@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'RuoYi',
+  name: 'Lanjerry',
   data() {
     return {
       url: 'https://gitee.com/lanjerry/lanjerry-admin-webapp'
