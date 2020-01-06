@@ -100,7 +100,7 @@
                 trigger="click"
                 @show="$refs['iconSelect'].reset()"
               >
-                <IconSelect ref="iconSelect" @selected="selected"/>
+                <common-icon-select ref="iconSelect" @selected="selected"/>
                 <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
                   <svg-icon
                     v-if="form.icon"
@@ -177,11 +177,11 @@
   import { listPermissions, getPermission, treePermissions, removePermission, savePermission, updatePermission, changePermissionStatus } from "@/api/sys/permission"
   import TreeSelect from "@riophae/vue-treeselect";
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-  import IconSelect from '@/components/IconSelect'
+  import CommonIconSelect from '@/components/common/IconSelect'
 
   export default {
     name: 'SysPermission',
-    components: { TreeSelect, IconSelect },
+    components: { TreeSelect, CommonIconSelect },
     data() {
       return {
         // 遮罩层

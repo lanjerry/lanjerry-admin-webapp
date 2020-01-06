@@ -17,7 +17,7 @@ import permission from './directive/permission'
 import './assets/icons' // icon
 import './permission' // permission control
 import { parseTime, resetForm, addDateRange, selectDictLabel, download } from "@/utils/lanjerry";
-import Pagination from "@/components/Pagination";
+import CommonPagination from "@/components/common/Pagination";
 
 // 全局方法挂载
 Vue.prototype.parseTime = parseTime
@@ -39,7 +39,7 @@ Vue.prototype.msgInfo = function (msg) {
 }
 
 // 全局组件挂载
-Vue.component('Pagination', Pagination)
+Vue.component('common-pagination', CommonPagination)
 
 Vue.use(permission)
 

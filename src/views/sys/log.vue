@@ -143,7 +143,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination
+    <common-pagination
       v-show="total>0"
       :total="total"
       :page.sync="queryParams.pageNum"
