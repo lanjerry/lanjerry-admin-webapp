@@ -52,6 +52,7 @@
   import NavSizeSelect from '@/components/layout/navbar/SizeSelect'
 
   export default {
+    name: 'Navbar',
     components: {
       NavHamburger,
       NavBreadcrumb,
