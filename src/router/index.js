@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/components/layout'
 
 /**
  * Note: 路由配置项

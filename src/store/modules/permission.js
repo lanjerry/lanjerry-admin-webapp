@@ -1,6 +1,6 @@
 import { constantRoutes } from '@/router'
 import { getRouters } from '@/api/global/menu'
-import Layout from '@/layout/index'
+import Layout from '@/components/layout'
 
 const permission = {
   state: {
