@@ -128,7 +128,6 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row,scope.index)"
-            v-hasPermi="['monitor:operlog:query']"
           >详细
           </el-button>
           <el-button
