@@ -135,7 +135,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['sys:role:remove']"
+            v-hasPermi="['sys:log:remove']"
           >删除
           </el-button>
         </template>
