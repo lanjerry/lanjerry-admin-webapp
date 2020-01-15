@@ -95,7 +95,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['monitor:operlog:remove']"
+          v-hasPermi="['sys:log:remove']"
         >删除
         </el-button>
       </el-col>
