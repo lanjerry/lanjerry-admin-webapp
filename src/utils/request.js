@@ -27,8 +27,11 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(res => {
-    const code = res.data.code
-    if (code === 203) {
+    const { code, msg } = res.data
+    // 200请求成功，203登录异常
+    if (code === 200) {
+      return res.data
+    } else if (code === 203) {
       MessageBox.confirm(
         '登录状态已过期或者身份异常，请重新登录',
         '系统提示',
@@ -42,14 +45,12 @@ service.interceptors.response.use(res => {
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       })
-    } else if (code !== 200) {
+    } else {
       Notification.error({
         title: '错误',
-        message: res.data.msg,
+        message: msg,
       })
       return Promise.reject('error')
-    } else {
-      return res.data
     }
   },
   error => {
