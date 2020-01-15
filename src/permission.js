@@ -38,13 +38,6 @@ router.beforeEach((to, from, next) => {
           })
       } else {
         next()
-        // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        // if (hasPermission(store.getters.roles, to.meta.roles)) {
-        //   next()
-        // } else {
-        //   next({ path: '/401', replace: true, query: { noGoBack: true }})
-        // }
-        // 可删 ↑
       }
     }
   } else {
@@ -53,7 +46,7 @@ router.beforeEach((to, from, next) => {
       // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      next(`/login`) // 否则全部重定向到登录页
       NProgress.done()
     }
   }
