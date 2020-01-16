@@ -54,11 +54,11 @@ export function resetForm(refName) {
 // 添加日期范围
 export function addDateRange(params, dateRange) {
   var search = params;
-  search.createdTimeStart = "";
-  search.createdTimeEnd = "";
+  search.createdTimeStart = undefined;
+  search.createdTimeEnd = undefined;
   if (null != dateRange && '' != dateRange) {
-    search.createdTimeStart = this.dateRange[0];
-    search.createdTimeEnd = this.dateRange[1];
+    search.createdTimeStart = dateRange[0];
+    search.createdTimeEnd = dateRange[1];
   }
   return search;
 }
