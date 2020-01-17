@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <sys-log-search-form ref="searchForm" :statusOptions="statusOptions" @handleQuery="handleQuery" />
+    <sys-log-search-form ref="searchForm" @handleQuery="handleQuery" />
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -92,17 +92,6 @@
         multiple: true,
         // 表格数据
         list: [],
-        // 状态数据字典
-        statusOptions: [
-          {
-            value: 1,
-            label: '成功'
-          },
-          {
-            value: 2,
-            label: '失败'
-          }
-        ],
         // 日志编号
         id: '',
         // 是否显示详情弹出框

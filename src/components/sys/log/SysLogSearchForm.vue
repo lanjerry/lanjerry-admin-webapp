@@ -88,15 +88,13 @@
 </template>
 
 <script>
+  import {sysLogStatusEnum} from '@/utils/enum'
+
   export default {
     name: 'SysUserSearchForm',
-    props: {
-      statusOptions: {
-        type: Array
-      }
-    },
     data() {
       return {
+        statusOptions: sysLogStatusEnum,
         queryParams: {
           userAccount: undefined,
           ipAddress: undefined,
