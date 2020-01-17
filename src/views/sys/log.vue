@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <sys-log-search-form ref="searchForm" @handleQuery="handleQuery" />
+    <sys-log-search-form ref="searchForm" @handleQuery="handleQuery"/>
 
     <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
@@ -12,7 +12,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['sys:log:remove']"
+          v-hasPermi="permission.remove"
         >删除
         </el-button>
       </el-col>
@@ -53,7 +53,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['sys:log:remove']"
+            v-hasPermi="permission.remove"
           >删除
           </el-button>
         </template>
@@ -74,7 +74,7 @@
 
 <script>
   import mixin from '@/mixin'
-  import { pageLogs, removLogs } from '@/api/sys/log'
+  import { pageLogs, removeLogs } from '@/api/sys/log'
   import SysLogSearchForm from '@/components/sys/log/SysLogSearchForm'
   import SysLogDetailDialog from '@/components/sys/log/SysLogDetailDialog'
 
@@ -93,12 +93,16 @@
         ids: [],
         // 非多个禁用
         multiple: true,
+        // 权限标识
+        permission: {
+          remove: ['sys:log:remove']
+        },
         // 表格数据
         list: [],
         // 日志编号
         id: '',
         // 是否显示详情弹出框
-        showDetailDialog: false,
+        showDetailDialog: false
       }
     },
     mounted() {
@@ -109,7 +113,7 @@
       fetchData() {
         this.loading = true
         const { page: pageNum, size: pageSize } = this
-        const params =  Object.assign(this.$refs.searchForm.queryParams, { pageNum, pageSize });
+        const params = Object.assign(this.$refs.searchForm.queryParams, { pageNum, pageSize })
         pageLogs(this.addDateRange(params, this.$refs.searchForm.dateRange)).then(res => {
           this.list = res.data.records
           this.total = res.data.total
@@ -139,7 +143,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return removLogs(ids)
+          return removeLogs(ids)
         }).then(() => {
           this.fetchData()
           this.msgSuccess('删除成功')

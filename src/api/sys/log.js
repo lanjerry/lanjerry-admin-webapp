@@ -18,7 +18,7 @@ export function getLog(id) {
 }
 
 // 删除系统日志
-export function removLogs(ids) {
+export function removeLogs(ids) {
   return request({
     url: '/sys/log/' + ids,
     method: 'delete'
