@@ -88,7 +88,7 @@
     data() {
       return {
         // 遮罩层
-        loading: true,
+        loading: false,
         // 选中数组
         ids: [],
         // 非多个禁用
@@ -117,7 +117,6 @@
         pageLogs(this.addDateRange(params, this.$refs.searchForm.dateRange)).then(res => {
           this.list = res.data.records
           this.total = res.data.total
-          this.loading = false
         }).catch(() => {
           this.list = []
           this.total = 0
