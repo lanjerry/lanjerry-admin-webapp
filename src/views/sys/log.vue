@@ -1,7 +1,9 @@
 <template>
   <div class="app-container">
+    <!-- 查询条件 -->
     <sys-log-search-form ref="searchForm" @handleQuery="handleQuery" />
 
+    <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -16,6 +18,7 @@
       </el-col>
     </el-row>
 
+    <!-- 表格 -->
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
       <el-table-column type="selection"/>
       <el-table-column prop="id" label="日志编号" width="100"/>
