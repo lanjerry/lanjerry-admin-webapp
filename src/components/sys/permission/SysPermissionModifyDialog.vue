@@ -89,7 +89,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="closed">关 闭</el-button>
-      <el-button type="primary" @click="handleSave">保 存</el-button>
+      <el-button type="primary" :loading="button.save" @click="handleSave">保 存</el-button>
     </div>
   </el-dialog>
 </template>
@@ -106,7 +106,8 @@
     name: 'SysPermissionModifyDialog',
     components: { TreeSelect, CommonIconSelect },
     mixins: [
-      mixin.visible
+      mixin.visible,
+      mixin.button
     ],
     props: {
       title: {
@@ -217,17 +218,24 @@
       handleSave() {
         this.$refs['form'].validate(valid => {
           if (valid) {
+            this.button.save = true
             if (this.id) {
               updatePermission(this.id, this.form).then(res => {
                 this.msgSuccess('修改成功')
                 this.closed()
                 this.$emit('success')
+              }).catch(() => {
+              }).then(() => {
+                this.clearButtonStatus();
               })
             } else {
               savePermission(this.form).then(res => {
                 this.msgSuccess('新增成功')
                 this.closed()
                 this.$emit('success')
+              }).catch(() => {
+              }).then(() => {
+                this.clearButtonStatus();
               })
             }
           }
