@@ -132,9 +132,9 @@
           parentId: [
             { required: true, message: '清选择上级目录', trigger: 'blur' }
           ],
-          // name: [
-          //   { required: true, message: '权限名称不能为空', trigger: 'blur' }
-          // ],
+          name: [
+            { required: true, message: '权限名称不能为空', trigger: 'blur' }
+          ],
           type: [
             { required: true, message: '请选择类型', trigger: 'change' }
           ],
