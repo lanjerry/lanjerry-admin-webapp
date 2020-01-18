@@ -67,7 +67,7 @@
       @pagination="fetchData"
     />
 
-    <!-- 操作日志详细 -->
+    <!-- 查看详细弹出层 -->
     <sys-log-detail-dialog :id="id" v-model="showDetailDialog"/>
   </div>
 </template>
@@ -145,7 +145,8 @@
         }).then(() => {
           this.msgSuccess('删除成功')
           this.fetchData()
-        }).catch(() => {})
+        }).catch(() => {
+        })
       }
     }
   }

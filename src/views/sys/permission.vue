@@ -15,7 +15,8 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table v-loading="loading" :data="list" row-key="id" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+    <el-table v-loading="loading" :data="list" row-key="id"
+              :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column prop="icon" label="权限名称" width="300">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon"/>
@@ -68,13 +69,14 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改权限对话框 -->
-    <sys-permission-modify-dialog :id="id" :parentId="parentId" :title="title" v-model="showModifyDialog" @success="fetchData"/>
+    <!-- 添加或修改权限弹出层 -->
+    <sys-permission-modify-dialog :id="id" :parentId="parentId" :title="title" v-model="showModifyDialog"
+                                  @success="fetchData"/>
   </div>
 </template>
 
 <script>
-  import { listPermissions, removePermission, changePermissionStatus } from "@/api/sys/permission"
+  import { listPermissions, removePermission, changePermissionStatus } from '@/api/sys/permission'
   import SysPermissionModifyDialog from '@/components/sys/permission/SysPermissionModifyDialog'
 
   export default {
@@ -99,7 +101,7 @@
         // 弹出层标题
         title: '',
         // 是否显示新增或者修改的弹出层
-        showModifyDialog: false,
+        showModifyDialog: false
       }
     },
     created() {
@@ -159,7 +161,8 @@
         }).then(() => {
           this.msgSuccess('删除成功')
           this.fetchData()
-        }).catch(() => {})
+        }).catch(() => {
+        })
       }
     }
   }

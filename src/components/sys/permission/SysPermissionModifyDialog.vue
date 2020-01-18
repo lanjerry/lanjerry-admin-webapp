@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="visible" ref="queryForm" @open="open" @closed="closed" width="600px">
+  <el-dialog :title="title" :visible.sync="visible" @open="open" @closed="closed" width="600px">
     <el-form ref="form" v-loading="loading" :model="form" :rules="rules" label-width="80px">
       <el-row>
         <el-col :span="24">
@@ -166,6 +166,7 @@
       },
       // 初始化表单
       initForm() {
+        this.resetForm('form')
         return {
           name: '',
           parentId: 0,
@@ -178,7 +179,6 @@
           status: 1,
           frameFlag: false
         }
-        this.resetForm('form')
       },
       // 打开弹出层
       open() {
@@ -226,7 +226,7 @@
                 this.$emit('success')
               }).catch(() => {
               }).then(() => {
-                this.clearButtonStatus();
+                this.clearButtonStatus()
               })
             } else {
               savePermission(this.form).then(res => {
@@ -235,7 +235,7 @@
                 this.$emit('success')
               }).catch(() => {
               }).then(() => {
-                this.clearButtonStatus();
+                this.clearButtonStatus()
               })
             }
           }
