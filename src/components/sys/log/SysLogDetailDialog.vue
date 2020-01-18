@@ -63,12 +63,13 @@
     data() {
       return {
         // 遮罩层
-        loading: true,
+        loading: false,
         // 表单参数
         form: this.initForm()
       }
     },
     methods: {
+      // 初始化表单
       initForm() {
         return {
           actionName: '',
@@ -85,6 +86,7 @@
           exceptionMsg: ''
         }
       },
+      // 打开弹出层
       open() {
         this.loading = true
         getLog(this.id).then(res => {
@@ -95,6 +97,7 @@
           this.loading = false
         })
       },
+      // 关闭弹出层
       closed() {
         this.$emit('input', false)
         this.$emit('closed')

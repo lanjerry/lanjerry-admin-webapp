@@ -101,7 +101,7 @@
         list: [],
         // 日志编号
         id: '',
-        // 是否显示详情弹出框
+        // 是否显示详情弹出层
         showDetailDialog: false
       }
     },
@@ -144,10 +144,9 @@
         }).then(function() {
           return removeLogs(ids)
         }).then(() => {
-          this.fetchData()
           this.msgSuccess('删除成功')
-        }).catch(function() {
-        })
+          this.fetchData()
+        }).catch(() => {})
       }
     }
   }
