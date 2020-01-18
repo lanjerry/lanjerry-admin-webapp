@@ -1,6 +1,6 @@
 import pager from './pager'
-// import button from './button'
 import visible from './visible'
+import button from './button'
 // import headers from './headers'
 // import mockLogin from './mockLogin'
 // import breadcrumb from './breadcrumb'
@@ -8,8 +8,8 @@ import visible from './visible'
 
 export default {
   pager,
-  // button,
-  visible
+  visible,
+  button
   // headers,
   // mockLogin,
   // breadcrumb,
