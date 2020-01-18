@@ -26,9 +26,9 @@ export function savePermission(data) {
 }
 
 // 更新系统权限
-export function updatePermission(data) {
+export function updatePermission(id, data) {
   return request({
-    url: '/sys/permission/' + data.id,
+    url: '/sys/permission/' + id,
     method: 'put',
     data: data
   })

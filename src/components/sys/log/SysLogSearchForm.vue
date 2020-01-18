@@ -94,7 +94,9 @@
     name: 'SysUserSearchForm',
     data() {
       return {
+        // 状态选项
         statusOptions: sysLogStatusEnum,
+        // 查询参数
         queryParams: {
           userAccount: undefined,
           ipAddress: undefined,
@@ -103,13 +105,16 @@
           actionName: undefined,
           status: null,
         },
+        // 日期范围
         dateRange: []
       }
     },
     methods: {
+      // 搜索按钮操作
       handleQuery() {
         this.$emit('handleQuery')
       },
+      // 重置按钮操作
       resetQuery() {
         this.dateRange = []
         this.resetForm('queryForm')
