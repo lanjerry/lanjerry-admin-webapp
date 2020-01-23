@@ -45,3 +45,31 @@ export const sysPermissionFrameFlagEnum = [
     label: '是'
   }
 ]
+
+// 系统用户状态枚举
+export const sysUserStatusEnum = [
+  {
+    value: 1,
+    label: '启用'
+  },
+  {
+    value: 2,
+    label: '停用'
+  }
+]
+
+// 系统用户性别枚举
+export const sysUserSexEnum = [
+  {
+    value: 1,
+    label: '男'
+  },
+  {
+    value: 2,
+    label: '女'
+  },
+  {
+    value: 3,
+    label: '未知'
+  }
+]

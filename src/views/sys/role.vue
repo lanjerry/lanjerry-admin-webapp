@@ -152,7 +152,7 @@
       },
       // 修改按钮操作
       handleUpdate(row) {
-        this.id = row.id || this.ids
+        this.id = row.id || (this.ids ? this.ids[0] : '')
         this.showModifyDialog = true
         this.title = '修改角色'
       },

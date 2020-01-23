@@ -64,7 +64,7 @@
         },
         // 权限树选项
         permissionOptions: [],
-        //
+        // 权限树的默认属性
         defaultProps: {
           children: 'children',
           label: 'label'

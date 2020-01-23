@@ -27,9 +27,9 @@ export function saveUser(data) {
 }
 
 // 更新系统用户
-export function updateUser(data) {
+export function updateUser(id, data) {
   return request({
-    url: '/sys/user/' + data.id,
+    url: '/sys/user/' + id,
     method: 'put',
     data: data
   })
