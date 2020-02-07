@@ -20,7 +20,7 @@
 
     <!-- 表格 -->
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection"/>
+      <el-table-column type="selection" v-hasPermi="permission.remove" />
       <el-table-column prop="id" label="日志编号" width="100"/>
       <el-table-column prop="userAccount" label="用户账号" width="120"/>
       <el-table-column prop="ipAddress" label="ip地址" width="120"/>
