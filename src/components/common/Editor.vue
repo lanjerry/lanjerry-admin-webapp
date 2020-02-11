@@ -148,7 +148,7 @@
     height: 192px;
   }
 
-  .el-upload {
+  .quill-img {
     display: none;
   }
 
