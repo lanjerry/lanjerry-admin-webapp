@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <sys-log-search-form ref="searchForm" @handleQuery="fetchData"/>
+    <sys-log-search-form ref="searchForm" @handleQuery="handleQuery"/>
 
     <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
@@ -82,6 +82,7 @@
     name: 'SysLog',
     components: { SysLogSearchForm, SysLogDetailDialog },
     mixins: [
+      mixin.search,
       mixin.pager
     ],
     data() {

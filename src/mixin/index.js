@@ -1,3 +1,4 @@
+import search from './search'
 import pager from './pager'
 import visible from './visible'
 import button from './button'
@@ -7,6 +8,7 @@ import button from './button'
 // import postContentType from './postContentType'
 
 export default {
+  search,
   pager,
   visible,
   button

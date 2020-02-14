@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <sys-user-search-form ref="searchForm" @handleQuery="fetchData"/>
+    <sys-user-search-form ref="searchForm" @handleQuery="handleQuery"/>
 
     <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
@@ -122,6 +122,7 @@
     name: 'SysUser',
     components: { SysUserSearchForm, SysUserModifyDialog },
     mixins: [
+      mixin.search,
       mixin.pager
     ],
     data() {

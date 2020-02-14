@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 查询条件 -->
-    <sys-role-search-form ref="searchForm" @handleQuery="fetchData"/>
+    <sys-role-search-form ref="searchForm" @handleQuery="handleQuery"/>
 
     <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
@@ -91,6 +91,7 @@
     name: 'SysRole',
     components: { SysRoleSearchForm, SysRoleModifyDialog },
     mixins: [
+      mixin.search,
       mixin.pager
     ],
     data() {
