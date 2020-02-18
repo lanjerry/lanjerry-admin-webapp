@@ -61,9 +61,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="loginIp" label="最后登陆IP"/>
-      <el-table-column prop="loginTime" label="最后登陆时间"/>
+      <el-table-column prop="loginTime" label="最后登陆时间" width="155"/>
       <el-table-column prop="creatorName" label="创建人"/>
-      <el-table-column prop="createdTime" label="创建时间"/>
+      <el-table-column prop="createdTime" label="创建时间" width="155"/>
       <el-table-column
         label="操作"
         align="center"
