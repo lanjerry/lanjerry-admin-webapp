@@ -1,5 +1,5 @@
 <template>
   <div class="app-container">
-   构建工具
+   表单构建
   </div>
 </template>

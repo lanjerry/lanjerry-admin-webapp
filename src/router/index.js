@@ -74,8 +74,21 @@ export const constantRoutes = [
       {
         path: 'profile',
         component: () => import('@/views/global/userProfile'),
-        name: '个人中心',
+        name: 'Profile',
         meta: { title: '个人中心', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/gen',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'edit',
+        component: () => import('@/views/tool/genEdit'),
+        name: 'GenEdit',
+        meta: { title: '生成配置' }
       }
     ]
   }
