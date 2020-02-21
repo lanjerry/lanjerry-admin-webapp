@@ -73,3 +73,91 @@ export const sysUserSexEnum = [
     label: '未知'
   }
 ]
+
+// 代码生成模板功能枚举
+export const toolGenTplFunctionEnum = [
+  {
+    value: 'pageList',
+    label: '分页列表'
+  },
+  {
+    value: 'list',
+    label: '不分页列表'
+  },
+  {
+    value: 'add',
+    label: '新增'
+  },
+  {
+    value: 'update',
+    label: '修改'
+  },
+  {
+    value: 'delete',
+    label: '删除'
+  },
+  {
+    value: 'export',
+    label: '导出'
+  },
+  {
+    value: 'import',
+    label: '导入'
+  }
+]
+
+// 代码生成查询方式枚举
+export const toolGenQueryTypeEnum = [
+  {
+    value: 'eq',
+    label: '='
+  },
+  {
+    value: 'ne',
+    label: '!='
+  },
+  {
+    value: 'gt',
+    label: '>'
+  },
+  {
+    value: 'ge',
+    label: '>='
+  },
+  {
+    value: 'lt',
+    label: '<'
+  },
+  {
+    value: 'le',
+    label: '<='
+  },
+  {
+    value: 'like',
+    label: 'Like'
+  },
+]
+
+// 代码生成显示类型枚举
+export const toolGenHtmlTypeEnum = [
+  {
+    value: 'input',
+    label: '文本框'
+  },
+  {
+    value: 'textarea',
+    label: '文本域'
+  },
+  {
+    value: 'radio',
+    label: '单选框'
+  },
+  {
+    value: 'checkbox',
+    label: '复选框'
+  },
+  {
+    value: 'datetime',
+    label: '日期控件'
+  }
+]

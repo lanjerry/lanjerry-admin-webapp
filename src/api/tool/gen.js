@@ -17,6 +17,23 @@ export function removeGens(ids) {
   })
 }
 
+// 根据表编号查询代码生成业务
+export function getGen(id) {
+  return request({
+    url: '/tool/gen/' + id,
+    method: 'get'
+  })
+}
+
+// 更新代码生成业务
+export function updateGen(id, data) {
+  return request({
+    url: '/tool/gen/' + id,
+    method: 'put',
+    data: data
+  })
+}
+
 // 分页查询数据库表
 export function pageDbTables(query) {
   return request({
