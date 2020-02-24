@@ -10,6 +10,7 @@
           type="primary"
           icon="el-icon-plus"
           size="mini"
+          :disabled="multiple"
           @click="handleGen"
           v-hasPermi="permission.code"
         >生成
@@ -105,6 +106,9 @@
 
     <!-- 导入弹出层 -->
     <tool-gen-import-dialog v-model="showImportDialog" @success="fetchData"/>
+
+    <!-- 预览弹出层 -->
+    <tool-gen-preview-dialog :id="id" v-model="showPreviewDialog" />
   </div>
 </template>
 
@@ -113,10 +117,12 @@
   import {pageGens, removeGens} from '@/api/tool/gen'
   import ToolGenSearchForm from '@/components/tool/gen/ToolGenSearchForm'
   import ToolGenImportDialog from '@/components/tool/gen/ToolGenImportDialog'
+  import ToolGenPreviewDialog from '@/components/tool/gen/ToolGenPreviewDialog'
+  import {downLoadZip} from "@/utils/zipdownload";
 
   export default {
     name: 'ToolGen',
-    components: {ToolGenSearchForm, ToolGenImportDialog},
+    components: {ToolGenSearchForm, ToolGenImportDialog, ToolGenPreviewDialog},
     mixins: [
       mixin.pager
     ],
@@ -139,8 +145,12 @@
         },
         // 表格数据
         list: [],
+        // 用户编号
+        id: '',
         // 是否显示导入的弹出层
-        showImportDialog: false
+        showImportDialog: false,
+        // 是否显示预览的弹出层
+        showPreviewDialog: false
       }
     },
     mounted() {
@@ -174,16 +184,18 @@
       },
       // 预览按钮操作
       handlePreview(row) {
-        console.log("预览")
+        this.id = row.id
+        this.showPreviewDialog = true
       },
       // 生成按钮操作
       handleGen(row) {
-        console.log("生成")
+        const ids = row.id || this.ids
+        downLoadZip("/tool/gen/code?ids=" + ids, "lanjerry");
       },
       // 修改按钮操作
       handleUpdate(row) {
         const id = row.id || this.ids[0];
-        this.$router.push({ path: "/gen/edit", query: { id: id } });
+        this.$router.push({path: "/gen/edit", query: {id: id}});
       },
       // 删除按钮操作
       handleDelete(row) {

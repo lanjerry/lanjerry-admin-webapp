@@ -9,14 +9,6 @@ export function pageGens(query) {
   })
 }
 
-// 删除代码生成业务
-export function removeGens(ids) {
-  return request({
-    url: '/tool/gen/' + ids,
-    method: 'delete'
-  })
-}
-
 // 根据表编号查询代码生成业务
 export function getGen(id) {
   return request({
@@ -25,12 +17,28 @@ export function getGen(id) {
   })
 }
 
-// 更新代码生成业务
+// 更新代码生成
 export function updateGen(id, data) {
   return request({
     url: '/tool/gen/' + id,
     method: 'put',
     data: data
+  })
+}
+
+// 删除代码生成
+export function removeGens(ids) {
+  return request({
+    url: '/tool/gen/' + ids,
+    method: 'delete'
+  })
+}
+
+// 预览代码生成
+export function previewGen(id) {
+  return request({
+    url: '/tool/gen/preview/' + id,
+    method: 'get'
   })
 }
 
