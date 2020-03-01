@@ -41,6 +41,11 @@
               <el-checkbox v-model="scope.row.requiredFlag"></el-checkbox>
             </template>
           </el-table-column>
+          <el-table-column label="唯一" min-width="5%">
+            <template slot-scope="scope">
+              <el-checkbox v-model="scope.row.onlyFlag"></el-checkbox>
+            </template>
+          </el-table-column>
           <el-table-column label="表单字段" min-width="5%">
             <template slot-scope="scope">
               <el-checkbox v-model="scope.row.formFlag"></el-checkbox>

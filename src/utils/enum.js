@@ -109,33 +109,37 @@ export const toolGenTplFunctionEnum = [
 // 代码生成查询方式枚举
 export const toolGenQueryTypeEnum = [
   {
+    value: 'like',
+    label: '模糊查询'
+  },
+  {
     value: 'eq',
-    label: '='
+    label: '精确查询'
+  },
+  {
+    value: 'between',
+    label: '范围查询'
   },
   {
     value: 'ne',
-    label: '!='
+    label: '不等于 <>'
   },
   {
     value: 'gt',
-    label: '>'
+    label: '大于 >'
   },
   {
     value: 'ge',
-    label: '>='
+    label: '大于等于 >='
   },
   {
     value: 'lt',
-    label: '<'
+    label: '小于 <'
   },
   {
-    value: 'le',
+    value: '小于等于 <=',
     label: '<='
-  },
-  {
-    value: 'like',
-    label: 'Like'
-  },
+  }
 ]
 
 // 代码生成显示类型枚举

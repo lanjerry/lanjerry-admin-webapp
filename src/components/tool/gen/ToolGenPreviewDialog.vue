@@ -43,7 +43,7 @@
       // 初始化表单
       initData() {
         return {
-          activeName: 'controller.java',
+          activeName: 'entity.java',
           data: {}
         }
       },
