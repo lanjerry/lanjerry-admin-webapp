@@ -46,14 +46,26 @@
               <el-checkbox v-model="scope.row.onlyFlag"></el-checkbox>
             </template>
           </el-table-column>
+          <el-table-column label="列表字段" min-width="5%">
+            <template slot-scope="scope">
+              <el-checkbox v-model="scope.row.listFlag"></el-checkbox>
+            </template>
+          </el-table-column>
           <el-table-column label="表单字段" min-width="5%">
             <template slot-scope="scope">
               <el-checkbox v-model="scope.row.formFlag"></el-checkbox>
             </template>
           </el-table-column>
-          <el-table-column label="列表字段" min-width="5%">
+          <el-table-column label="表单显示类型" min-width="12%">
             <template slot-scope="scope">
-              <el-checkbox v-model="scope.row.listFlag"></el-checkbox>
+              <el-select v-model="scope.row.formHtmlType">
+                <el-option
+                  v-for="type in htmlTypeOptions"
+                  :key="type.value"
+                  :label="type.label"
+                  :value="type.value"
+                />
+              </el-select>
             </template>
           </el-table-column>
           <el-table-column label="查询字段" min-width="5%">
@@ -73,9 +85,9 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="显示类型" min-width="12%">
+          <el-table-column label="查询显示类型" min-width="12%">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.htmlType">
+              <el-select v-model="scope.row.queryHtmlType">
                 <el-option
                   v-for="type in htmlTypeOptions"
                   :key="type.value"

@@ -149,8 +149,12 @@ export const toolGenHtmlTypeEnum = [
     label: '文本框'
   },
   {
-    value: 'textarea',
-    label: '文本域'
+    value: 'select',
+    label: '下拉框'
+  },
+  {
+    value: 'datetime',
+    label: '日期控件'
   },
   {
     value: 'radio',
@@ -161,7 +165,7 @@ export const toolGenHtmlTypeEnum = [
     label: '复选框'
   },
   {
-    value: 'datetime',
-    label: '日期控件'
+    value: 'textarea',
+    label: '文本域'
   }
 ]
