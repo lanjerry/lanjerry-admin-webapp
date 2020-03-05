@@ -2,12 +2,12 @@
   <el-dialog title="代码预览" :visible.sync="visible" width="85%" @open="open" @closed="closed" top="5vh">
     <el-tabs v-model="preview.activeName">
       <el-tab-pane
-        v-for="(value, key) in preview.data"
-        :label="key.substring(key.lastIndexOf('/')+1,key.indexOf('.vm'))"
-        :name="key.substring(key.lastIndexOf('/')+1,key.indexOf('.vm'))"
-        :key="key"
+        v-for="item in preview.data"
+        :label="item.title.substring(item.title.lastIndexOf('/')+1,item.title.indexOf('.vm'))"
+        :name="item.title.substring(item.title.lastIndexOf('/')+1,item.title.indexOf('.vm'))"
+        :key="item.title"
       >
-        <pre>{{ value }}</pre>
+        <pre>{{ item.content }}</pre>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
@@ -44,7 +44,7 @@
       initData() {
         return {
           activeName: 'entity.java',
-          data: {}
+          data: []
         }
       },
       // 打开弹出层
