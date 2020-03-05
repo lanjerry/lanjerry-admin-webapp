@@ -82,7 +82,7 @@ export const toolGenTplFunctionEnum = [
   },
   {
     value: 'list',
-    label: '不分页列表'
+    label: '列表'
   },
   {
     value: 'add',
