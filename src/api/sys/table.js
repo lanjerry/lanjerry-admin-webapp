@@ -17,15 +17,6 @@ export function getTable(id) {
   })
 }
 
-// 新增系统测试
-export function saveTable(data) {
-  return request({
-    url: '/sys/table/',
-    method: 'post',
-    data: data
-  })
-}
-
 // 更新系统测试
 export function updateTable(id, data) {
   return request({

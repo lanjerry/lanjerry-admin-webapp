@@ -6,9 +6,6 @@
     <!-- 操作栏 -->
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="table.save">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
         <el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate" v-hasPermi="table.update">修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -36,7 +33,7 @@
     </el-table>
     <common-pagination v-show="total>0" :total="total" :page.sync="page" :size.sync="size" @pagination="fetchData"/>
 
-    <!-- 添加或修改系统测试弹出层 -->
+    <!-- 修改系统测试弹出层 -->
     <sys-table-modify-dialog :id="id" :title="title" v-model="showModifyDialog" @success="fetchData"/>
   </div>
 </template>
@@ -66,7 +63,6 @@
         multiple: true,
         // 权限标识
         table: {
-          save: ['sys:table:save'],
           update: ['sys:table:update'],
           remove: ['sys:table:remove']
         },
@@ -76,7 +72,7 @@
         id: '',
         // 弹出层标题
         title: '',
-        // 是否显示新增或者修改的弹出层
+        // 是否显示修改的弹出层
         showModifyDialog: false
       }
     },
@@ -104,12 +100,6 @@
         this.ids = selection.map(item => item.id)
         this.single = selection.length != 1
         this.multiple = !selection.length
-      },
-      // 新增按钮操作
-      handleAdd() {
-        this.id = ''
-        this.showModifyDialog = true
-        this.title = '添加系统测试'
       },
       // 修改按钮操作
       handleUpdate(row) {

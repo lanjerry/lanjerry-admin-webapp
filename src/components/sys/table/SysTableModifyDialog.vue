@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="title" :visible.sync="visible" @open="open" @closed="closed" width="600px">
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="90px">
       <el-form-item label="测试字段1" prop="testColumn01">
         <el-input v-model="form.testColumn01" placeholder="请输入测试字段1" maxlength="45" clearable />
       </el-form-item>
@@ -10,10 +10,12 @@
       <el-form-item label="测试字段3" prop="testColumn03">
         <el-select v-model="form.testColumn03" placeholder="请输入测试字段3" clearable>
           <el-option label="请选择测试字段3" :value="null"></el-option>
+          <el-option label="呵呵" :value="1"></el-option>
+          <el-option label="哈哈" :value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="测试字段4" prop="testColumnTime">
-        <el-date-picker v-model="form.testColumnTime" type="date" placeholder="请选择测试字段4" clearable></el-date-picker>
+        <el-date-picker v-model="form.testColumnTime" placeholder="请选择测试字段4" type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" style="width: 200px;" clearable></el-date-picker>
       </el-form-item>
       <el-form-item label="测试字段5" prop="testColumnPhone">
         <el-input v-model="form.testColumnPhone" placeholder="请输入测试字段5" maxlength="11" clearable />
@@ -31,7 +33,7 @@
 
 <script>
   import mixin from '@/mixin'
-  import { getTable, saveTable, updateTable } from '@/api/sys/table'
+  import { getTable, updateTable } from '@/api/sys/table'
 
   export default {
     name: 'SysTableModifyDialog',
@@ -89,8 +91,8 @@
         this.resetForm('form')
         return {
           testColumn01: '',
-          testColumn02: 0,
-          testColumn03: 0,
+          testColumn02: null,
+          testColumn03: null,
           testColumnTime: null,
           testColumnPhone: '',
           testColumnMail: ''
@@ -99,16 +101,16 @@
       // 打开弹出层
       open() {
         this.loading = true
-          if (this.id) {
-            // 查询系统测试信息
-            getTable(this.id).then(res => {
-              this.form = res.data
-            })
+        if (this.id) {
+          // 查询系统测试信息
+          getTable(this.id).then(res => {
+            this.form = res.data
           }).catch(() => {
             this.form = this.initForm()
           }).then(() => {
             this.loading = false
           })
+        }
       },
       // 关闭弹出层
       closed() {
@@ -125,15 +127,6 @@
             if (this.id) {
               updateTable(this.id, this.form).then(res => {
                 this.msgSuccess('修改成功')
-                this.closed()
-                this.$emit('success')
-              }).catch(() => {
-              }).then(() => {
-                this.clearButtonStatus()
-              })
-            } else {
-              saveTable(this.form).then(res => {
-                this.msgSuccess('新增成功')
                 this.closed()
                 this.$emit('success')
               }).catch(() => {

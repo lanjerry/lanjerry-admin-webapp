@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
+  <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="90px">
     <el-form-item label="测试字段1" prop="testColumn01">
       <el-input
         v-model="queryParams.testColumn01"
@@ -61,8 +61,7 @@
         // 查询参数
         queryParams: {
           testColumn01: undefined,
-          testColumn03: undefined,
-          testColumnTime: undefined,
+          testColumn03: null,
           testColumnPhone: undefined
         },
         // 日期范围
