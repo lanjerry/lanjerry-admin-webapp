@@ -25,7 +25,7 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-table :data="list" @selection-change="handleSelectionChange" height="260px">
+      <el-table @row-click="handleRowClick" ref="table" :data="list" @selection-change="handleSelectionChange" height="260px">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="tableName" label="表名称"></el-table-column>
         <el-table-column prop="tableComment" label="表描述"></el-table-column>
@@ -111,6 +111,10 @@
         }).then(() => {
           this.loading = false
         })
+      },
+      // 单击表格的行
+      handleRowClick(row) {
+        this.$refs.table.toggleRowSelection(row);
       },
       // 多选框选中数据
       handleSelectionChange(selection) {
