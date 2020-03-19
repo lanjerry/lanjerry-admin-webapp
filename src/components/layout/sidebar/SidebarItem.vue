@@ -1,18 +1,16 @@
 <template>
-  <div v-if="!item.hidden" class="menu-wrapper">
-    <template
-      v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <sidebar-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+  <div v-if="!item.hidden">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <sidebar-menu-item item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
-                             :title="onlyOneChild.meta.title"/>
+          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
-      </sidebar-link>
+      </app-link>
     </template>
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <sidebar-menu-item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title"/>
+        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -28,15 +26,15 @@
 
 <script>
   import path from 'path'
-  import SidebarLink from '@/components/layout/sidebar/Link'
-  import SidebarMenuItem from '@/components/layout/sidebar/MenuItem'
   import { isExternal } from '@/utils/validate'
-  import fixIOSBug from '@/utils/fixIOSBug'
+  import Item from './Item'
+  import AppLink from './Link'
+  import FixiOSBug from './FixiOSBug'
 
   export default {
     name: 'SidebarItem',
-    components: { SidebarMenuItem, SidebarLink },
-    mixins: [fixIOSBug],
+    components: { Item, AppLink },
+    mixins: [FixiOSBug],
     props: {
       // route object
       item: {
@@ -75,7 +73,7 @@
 
         // Show parent if there are no child router to display
         if (showingChildren.length === 0) {
-          this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
+          this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
           return true
         }
 
