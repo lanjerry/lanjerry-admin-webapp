@@ -1,7 +1,14 @@
 # lanjerry-admin-webapp
 
-#### 介绍
+## 简介
 lanjerry-admin前端
+
+## 在线演示
+
+[https://vue.lanjerry.com](https://vue.lanjerry.com) 
+
+- 账号：admin
+- 密码：123456 
 
 ## 项目源码
 
