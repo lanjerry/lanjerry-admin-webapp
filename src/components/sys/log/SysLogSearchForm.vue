@@ -2,7 +2,7 @@
   <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
     <el-form-item label="用户账号" prop="userAccount">
       <el-input
-        v-model="queryParams.userAccount"
+        v-model.trim="queryParams.userAccount"
         placeholder="请输入用户账号"
         clearable
         style="width: 200px;"
@@ -12,7 +12,7 @@
     </el-form-item>
     <el-form-item label="IP地址" prop="ipAddress">
       <el-input
-        v-model="queryParams.ipAddress"
+        v-model.trim="queryParams.ipAddress"
         placeholder="请输入IP地址"
         clearable
         style="width: 200px;"
@@ -22,7 +22,7 @@
     </el-form-item>
     <el-form-item label="请求地址" prop="requestUri">
       <el-input
-        v-model="queryParams.requestUri"
+        v-model.trim="queryParams.requestUri"
         placeholder="请输入请求地址"
         clearable
         style="width: 200px;"
@@ -32,7 +32,7 @@
     </el-form-item>
     <el-form-item label="请求方法" prop="requestMethod">
       <el-input
-        v-model="queryParams.requestMethod"
+        v-model.trim="queryParams.requestMethod"
         placeholder="请输入请求方法"
         clearable
         style="width: 200px;"
@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item label="动作名称" prop="actionName">
       <el-input
-        v-model="queryParams.actionName"
+        v-model.trim="queryParams.actionName"
         placeholder="请输入动作名称"
         clearable
         style="width: 200px;"

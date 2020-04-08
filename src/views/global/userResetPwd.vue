@@ -1,13 +1,13 @@
 <template>
   <el-form ref="form" :model="user" :rules="rules" label-width="80px">
     <el-form-item label="旧密码" prop="oriPassword">
-      <el-input v-model="user.oriPassword" placeholder="请输入旧密码" type="password" />
+      <el-input v-model.trim="user.oriPassword" placeholder="请输入旧密码" type="password" />
     </el-form-item>
     <el-form-item label="新密码" prop="newPassword">
-      <el-input v-model="user.newPassword" placeholder="请输入新密码" type="password" />
+      <el-input v-model.trim="user.newPassword" placeholder="请输入新密码" type="password" />
     </el-form-item>
     <el-form-item label="确认密码" prop="confirmPassword">
-      <el-input v-model="user.confirmPassword" placeholder="请确认密码" type="password" />
+      <el-input v-model.trim="user.confirmPassword" placeholder="请确认密码" type="password" />
     </el-form-item>
     <el-form-item>
       <el-button type="danger" size="mini" @click="close">关闭</el-button>

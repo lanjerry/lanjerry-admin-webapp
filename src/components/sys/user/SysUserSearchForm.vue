@@ -2,7 +2,7 @@
   <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
     <el-form-item label="用户编号" prop="id">
       <el-input
-        v-model="queryParams.id"
+        v-model.trim="queryParams.id"
         placeholder="请输入用户编号"
         clearable
         size="small"
@@ -12,7 +12,7 @@
     </el-form-item>
     <el-form-item label="帐号" prop="account">
       <el-input
-        v-model="queryParams.account"
+        v-model.trim="queryParams.account"
         placeholder="请输入帐号"
         clearable
         size="small"
@@ -22,7 +22,7 @@
     </el-form-item>
     <el-form-item label="昵称" prop="name">
       <el-input
-        v-model="queryParams.name"
+        v-model.trim="queryParams.name"
         placeholder="请输入昵称"
         clearable
         size="small"

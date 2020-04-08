@@ -2,13 +2,13 @@
   <el-dialog :title="title" :visible.sync="visible" @open="open" @closed="closed" width="600px">
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="账号" prop="account">
-        <el-input :disabled="this.id != ''" v-model="form.account" placeholder="请输入账号"/>
+        <el-input :disabled="this.id != ''" v-model.trim="form.account" placeholder="请输入账号"/>
       </el-form-item>
       <el-form-item v-if="!this.id" label="密码" prop="password">
-        <el-input v-model="form.password" placeholder="请输入密码" type="password"/>
+        <el-input v-model.trim="form.password" placeholder="请输入密码" type="password"/>
       </el-form-item>
       <el-form-item label="昵称" prop="name">
-        <el-input v-model="form.name" placeholder="请输入昵称" maxlength="50"/>
+        <el-input v-model.trim="form.name" placeholder="请输入昵称" maxlength="50"/>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
         <el-radio-group v-model="form.sex">
@@ -21,10 +21,10 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50"/>
+        <el-input v-model.trim="form.email" placeholder="请输入邮箱" maxlength="50"/>
       </el-form-item>
       <el-form-item label="手机号码" prop="phone">
-        <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="50"/>
+        <el-input v-model.trim="form.phone" placeholder="请输入手机号码" maxlength="50"/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="form.status">

@@ -23,7 +23,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-input placeholder="请输入生成包路径" v-model="info.packageName" />
+          <el-input placeholder="请输入生成包路径" v-model.trim="info.packageName" />
         </el-form-item>
       </el-col>
 
@@ -35,7 +35,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-input placeholder="请输入生成模块名" v-model="info.moduleName" />
+          <el-input placeholder="请输入生成模块名" v-model.trim="info.moduleName" />
         </el-form-item>
       </el-col>
 
@@ -47,7 +47,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-input placeholder="请输入生成业务名" v-model="info.businessName" />
+          <el-input placeholder="请输入生成业务名" v-model.trim="info.businessName" />
         </el-form-item>
       </el-col>
 
@@ -59,7 +59,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-input placeholder="请输入生成功能名" v-model="info.functionName" />
+          <el-input placeholder="请输入生成功能名" v-model.trim="info.functionName" />
         </el-form-item>
       </el-col>
     </el-row>

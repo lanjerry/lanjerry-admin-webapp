@@ -38,7 +38,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="权限名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入权限名称"/>
+            <el-input v-model.trim="form.name" placeholder="请输入权限名称"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -48,17 +48,17 @@
         </el-col>
         <el-col :span="12">
           <el-form-item v-if="form.type == 1" label="路由地址" prop="path">
-            <el-input v-model="form.path" placeholder="请输入路由地址"/>
+            <el-input v-model.trim="form.path" placeholder="请输入路由地址"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item v-if="form.type == 1" label="组件路径" prop="component">
-            <el-input v-model="form.component" placeholder="请输入组件路径"/>
+            <el-input v-model.trim="form.component" placeholder="请输入组件路径"/>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="权限标识">
-            <el-input v-model="form.permission" placeholder="请权限标识" maxlength="50"/>
+            <el-input v-model.trim="form.permission" placeholder="请权限标识" maxlength="50"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">

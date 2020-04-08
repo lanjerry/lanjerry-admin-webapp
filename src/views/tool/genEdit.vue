@@ -33,7 +33,7 @@
           />
           <el-table-column label="字段描述" min-width="10%">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.columnComment"></el-input>
+              <el-input v-model.trim="scope.row.columnComment"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="必填" min-width="5%">

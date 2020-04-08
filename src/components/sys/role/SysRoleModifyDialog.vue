@@ -2,10 +2,10 @@
   <el-dialog :title="title" :visible.sync="visible" @open="open" @closed="closed" width="500px">
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="角色名称" prop="name">
-        <el-input :disabled="form.id != undefined" v-model="form.name" placeholder="请输入角色名称"/>
+        <el-input :disabled="form.id != undefined" v-model.trim="form.name" placeholder="请输入角色名称"/>
       </el-form-item>
       <el-form-item label="权限标识" prop="permissionTag">
-        <el-input v-model="form.permissionTag" placeholder="请输入权限标识"/>
+        <el-input v-model.trim="form.permissionTag" placeholder="请输入权限标识"/>
       </el-form-item>
       <el-form-item label="权限">
         <el-tree
