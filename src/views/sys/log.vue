@@ -16,11 +16,21 @@
         >删除
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="permission.export"
+        >导出
+        </el-button>
+      </el-col>
     </el-row>
 
     <!-- 表格 -->
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" v-hasPermi="permission.remove" />
+      <el-table-column type="selection" v-hasPermi="permission.remove"/>
       <el-table-column prop="id" label="日志编号" width="100"/>
       <el-table-column prop="userAccount" label="用户账号" width="120"/>
       <el-table-column prop="ipAddress" label="ip地址" width="120"/>
@@ -74,7 +84,7 @@
 
 <script>
   import mixin from '@/mixin'
-  import { pageLogs, removeLogs } from '@/api/sys/log'
+  import { exportLogs, pageLogs, removeLogs } from '@/api/sys/log'
   import SysLogSearchForm from '@/components/sys/log/SysLogSearchForm'
   import SysLogDetailDialog from '@/components/sys/log/SysLogDetailDialog'
 
@@ -95,7 +105,8 @@
         multiple: true,
         // 权限标识
         permission: {
-          remove: ['sys:log:remove']
+          remove: ['sys:log:remove'],
+          export: ['sys:log:export']
         },
         // 表格数据
         list: [],
@@ -147,6 +158,32 @@
           this.msgSuccess('删除成功')
           this.fetchData()
         }).catch(() => {
+        })
+      },
+      // 导出按钮操作
+      handleExport() {
+        const ids = this.ids
+        const params = Object.assign(this.$refs.searchForm.queryParams, { ids })
+        const data = this.addDateRange(params, this.$refs.searchForm.dateRange)
+        this.$confirm('是否确认导出日志的数据项?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async function() {
+          await exportLogs(data).then(res => {
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = window.URL.createObjectURL(new Blob([res]))
+            link.setAttribute('download', '系统日志.xls')
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+          })
+        }).then(() => {
+          this.msgSuccess('导出成功')
+          delete params.ids // 移除ids参数
+        }).catch((res) => {
+          this.msgError('导出失败：' + res)
         })
       }
     }

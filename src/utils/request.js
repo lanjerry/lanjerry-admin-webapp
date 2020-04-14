@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Notification, MessageBox, Message } from 'element-ui'
+import { Message, MessageBox, Notification } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -28,8 +28,9 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(res => {
     const { code, msg } = res.data
+
     // 200请求成功，203登录异常
-    if (code === 200) {
+    if (code === 200 || !code) {
       return res.data
     } else if (code === 203) {
       MessageBox.confirm(
@@ -48,7 +49,7 @@ service.interceptors.response.use(res => {
     } else {
       Notification.error({
         title: '错误',
-        message: msg,
+        message: msg
       })
       return Promise.reject('error')
     }

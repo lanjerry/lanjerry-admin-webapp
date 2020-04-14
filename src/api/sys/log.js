@@ -24,3 +24,13 @@ export function removeLogs(ids) {
     method: 'delete'
   })
 }
+
+// 导出系统日志
+export function exportLogs(data) {
+  return request({
+    responseType: 'blob',
+    url: '/sys/log/export',
+    method: 'post',
+    data: data
+  })
+}
