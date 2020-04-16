@@ -46,12 +46,12 @@
               <el-checkbox v-model="scope.row.onlyFlag"></el-checkbox>
             </template>
           </el-table-column>
-          <el-table-column label="列表字段" min-width="5%">
+          <el-table-column label="列表字段" min-width="6%">
             <template slot-scope="scope">
               <el-checkbox v-model="scope.row.listFlag"></el-checkbox>
             </template>
           </el-table-column>
-          <el-table-column label="表单字段" min-width="5%">
+          <el-table-column label="表单字段" min-width="6%">
             <template slot-scope="scope">
               <el-checkbox v-model="scope.row.formFlag"></el-checkbox>
             </template>
@@ -68,7 +68,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="查询字段" min-width="5%">
+          <el-table-column label="查询字段" min-width="6%">
             <template slot-scope="scope">
               <el-checkbox v-model="scope.row.queryFlag"></el-checkbox>
             </template>
@@ -95,6 +95,11 @@
                   :value="type.value"
                 />
               </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column label="导出字段" min-width="6%">
+            <template slot-scope="scope">
+              <el-checkbox v-model="scope.row.exportFlag"></el-checkbox>
             </template>
           </el-table-column>
         </el-table>
