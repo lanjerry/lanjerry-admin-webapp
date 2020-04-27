@@ -5,8 +5,8 @@
         <tool-gen-basic-form ref="genBasicForm" :info="info"/>
       </el-tab-pane>
       <el-tab-pane label="字段信息" name="column">
-        <el-table :data="columns" :max-height="tableHeight">
-          <el-table-column label="序号" type="index" min-width="5%"/>
+        <el-table ref="dragTable" :data="columns" row-key="id" :max-height="tableHeight">
+          <el-table-column label="序号" type="index" min-width="5%" class-name="allowDrag" />
           <el-table-column
             label="字段名称"
             prop="columnName"
@@ -123,6 +123,7 @@
   import {getGen, updateGen} from '@/api/tool/gen'
   import ToolGenBasicForm from '@/components/tool/gen/ToolGenBasicForm'
   import ToolGenInfoForm from '@/components/tool/gen/ToolGenInfoForm'
+  import Sortable from 'sortablejs'
 
   export default {
     name: "GenEdit",
@@ -209,6 +210,19 @@
           });
         });
       }
+    },
+    mounted() {
+      const el = this.$refs.dragTable.$el.querySelectorAll(".el-table__body-wrapper > table > tbody")[0];
+      const sortable = Sortable.create(el, {
+        handle: ".allowDrag",
+        onEnd: evt => {
+          const targetRow = this.columns.splice(evt.oldIndex, 1)[0];
+          this.columns.splice(evt.newIndex, 0, targetRow);
+          for (let index in this.columns) {
+            this.columns[index].sort = parseInt(index) + 1;
+          }
+        }
+      });
     }
   }
 </script>
