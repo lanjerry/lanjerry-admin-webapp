@@ -33,23 +33,23 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('@/views/redirect')
+        component: (resolve) => require(['@/views/redirect'], resolve)
       }
     ]
   },
   {
     path: '/login',
-    component: () => import('@/views/login'),
+    component: (resolve) => require(['@/views/login'], resolve),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('@/views/error/404'),
+    component: (resolve) => require(['@/views/error/404'], resolve),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('@/views/error/401'),
+    component: (resolve) => require(['@/views/error/401'], resolve),
     hidden: true
   },
   {
@@ -59,7 +59,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/index'),
+        component: (resolve) => require(['@/views/index'], resolve),
         name: '首页',
         meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
       }
@@ -73,7 +73,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'profile',
-        component: () => import('@/views/global/userProfile'),
+        component: (resolve) => require(['@/views/global/userProfile'], resolve),
         name: 'Profile',
         meta: { title: '个人中心', icon: 'user' }
       }
@@ -86,7 +86,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'edit',
-        component: () => import('@/views/tool/genEdit'),
+        component: (resolve) => require(['@/views/tool/genEdit'], resolve),
         name: 'GenEdit',
         meta: { title: '生成配置' }
       }
