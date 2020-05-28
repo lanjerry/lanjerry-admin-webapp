@@ -43,8 +43,8 @@
         <el-option
           v-for="status in statusOptions"
           :key="status.value"
-          :label="status.label"
-          :value="status.value"
+          :label="status.text"
+          :value="status.name"
         />
       </el-select>
     </el-form-item>

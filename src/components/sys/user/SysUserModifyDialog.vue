@@ -15,8 +15,8 @@
           <el-radio
             v-for="sex in sexOptions"
             :key="sex.value"
-            :label="sex.value"
-          >{{sex.label}}
+            :label="sex.name"
+          >{{sex.text}}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -31,8 +31,8 @@
           <el-radio
             v-for="status in statusOptions"
             :key="status.value"
-            :label="status.value"
-          >{{status.label}}
+            :label="status.name"
+          >{{status.text}}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -133,10 +133,10 @@
           account: '',
           password: '',
           name: '',
-          sex: 1,
+          sex: 'MALE',
           email: '',
           phone: '',
-          status: 1,
+          status: 'ENABLE',
           roleIds: []
         }
       },
@@ -150,8 +150,8 @@
             // 查询系统角色信息
             getUser(this.id).then(res => {
               this.form = res.data
-              this.form.sex = res.data.sex.value
-              this.form.status = res.data.status.value
+              this.form.sex = res.data.sex.name
+              this.form.status = res.data.status.name
             })
           }
         }).catch(() => {

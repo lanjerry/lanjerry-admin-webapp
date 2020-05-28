@@ -14,8 +14,8 @@
         <el-radio
           v-for="sex in sexOptions"
           :key="sex.value"
-          :label="sex.value"
-        >{{sex.label}}
+          :label="sex.name"
+        >{{sex.text}}
         </el-radio>
       </el-radio-group>
     </el-form-item>
@@ -28,6 +28,7 @@
 
 <script>
 import { updateUserProfile } from "@/api/global/currentUser";
+import { sysUserSexEnum } from '@/utils/enum'
 
 export default {
   props: {
@@ -37,21 +38,8 @@ export default {
   },
   data() {
     return {
-      // 性别数据字典
-      sexOptions: [
-        {
-          value: 1,
-          label: '男'
-        },
-        {
-          value: 2,
-          label: '女'
-        },
-        {
-          value: 3,
-          label: '未知'
-        }
-      ],
+      // 性别选项
+      sexOptions: sysUserSexEnum,
       // 表单校验
       rules: {
         name: [

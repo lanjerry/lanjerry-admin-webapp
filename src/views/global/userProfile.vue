@@ -79,7 +79,7 @@ export default {
     getUser() {
       getUserProfile().then(response => {
         this.user = response.data;
-        this.user.sex = response.data.sex.value;
+        this.user.sex = response.data.sex.name;
       });
     }
   }

@@ -13,14 +13,14 @@
               <el-radio
                 v-for="type in typeOptions"
                 :key="type.value"
-                :label="type.value"
-              >{{type.label}}
+                :label="type.name"
+              >{{type.text}}
               </el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item v-if="form.type == 1" label="图标">
+          <el-form-item v-if="form.type === 'MENU'" label="图标">
             <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
               <common-icon-select ref="iconSelect" @selected="selected"/>
               <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
@@ -47,12 +47,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item v-if="form.type == 1" label="路由地址" prop="path">
+          <el-form-item v-if="form.type === 'MENU'" label="路由地址" prop="path">
             <el-input v-model.trim="form.path" placeholder="请输入路由地址"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item v-if="form.type == 1" label="组件路径" prop="component">
+          <el-form-item v-if="form.type === 'MENU'" label="组件路径" prop="component">
             <el-input v-model.trim="form.component" placeholder="请输入组件路径"/>
           </el-form-item>
         </el-col>
@@ -67,20 +67,20 @@
               <el-radio
                 v-for="status in statusOptions"
                 :key="status.value"
-                :label="status.value"
-              >{{status.label}}
+                :label="status.name"
+              >{{status.text}}
               </el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item v-if="form.type == 1" label="是否外链" prop="frameFlag">
+          <el-form-item v-if="form.type === 'MENU'" label="是否外链" prop="frameFlag">
             <el-radio-group v-model="form.frameFlag">
               <el-radio
                 v-for="frameFlag in frameFlagOptions"
                 :key="frameFlag.value"
                 :label="frameFlag.value"
-              >{{frameFlag.label}}
+              >{{frameFlag.text}}
               </el-radio>
             </el-radio-group>
           </el-form-item>
@@ -170,13 +170,13 @@
         return {
           name: '',
           parentId: 0,
-          type: 1,
+          type: 'MENU',
           path: '',
           component: '',
           permission: '',
           icon: '',
           sort: 99,
-          status: 1,
+          status: 'ENABLE',
           frameFlag: false
         }
       },
@@ -193,8 +193,8 @@
             // 查询系统权限信息
             getPermission(this.id).then(res => {
               this.form = res.data
-              this.form.type = res.data.type.value
-              this.form.status = res.data.status.value
+              this.form.type = res.data.type.name
+              this.form.status = res.data.status.name
             })
           } else {
             if (this.parentId) {

@@ -1,60 +1,14 @@
-// 系统日志状态枚举
-export const sysLogStatusEnum = [
-  {
-    value: 1,
-    label: '成功'
-  },
-  {
-    value: 2,
-    label: '失败'
-  }
-]
-
-// 系统权限类型枚举
-export const sysPermissionTypeEnum = [
-  {
-    value: 1,
-    label: '菜单'
-  },
-  {
-    value: 2,
-    label: '按钮'
-  }
-]
-
-// 系统权限状态枚举
-export const sysPermissionStatusEnum = [
-  {
-    value: 1,
-    label: '启用'
-  },
-  {
-    value: 2,
-    label: '停用'
-  }
-]
-
-// 系统权限是否外链枚举
-export const sysPermissionFrameFlagEnum = [
-  {
-    value: false,
-    label: '否'
-  },
-  {
-    value: true,
-    label: '是'
-  }
-]
-
 // 系统用户状态枚举
 export const sysUserStatusEnum = [
   {
     value: 1,
-    label: '启用'
+    text: '启用',
+    name: 'ENABLE'
   },
   {
     value: 2,
-    label: '停用'
+    text: '停用',
+    name: 'DISABLE'
   }
 ]
 
@@ -62,15 +16,72 @@ export const sysUserStatusEnum = [
 export const sysUserSexEnum = [
   {
     value: 1,
-    label: '男'
+    text: '男',
+    name: 'MALE'
   },
   {
     value: 2,
-    label: '女'
+    text: '女',
+    name: 'FEMALE'
   },
   {
     value: 3,
-    label: '未知'
+    text: '未知',
+    name: 'UNKNOWN'
+  }
+]
+
+// 系统权限类型枚举
+export const sysPermissionTypeEnum = [
+  {
+    value: 1,
+    text: '菜单',
+    name: 'MENU'
+  },
+  {
+    value: 2,
+    text: '按钮',
+    name: 'BUTTON'
+  }
+]
+
+// 系统权限状态枚举
+export const sysPermissionStatusEnum = [
+  {
+    value: 1,
+    text: '启用',
+    name: 'ENABLE'
+  },
+  {
+    value: 2,
+    text: '停用',
+    name: 'DISABLE'
+  }
+]
+
+// 系统权限是否外链枚举
+export const sysPermissionFrameFlagEnum = [
+  {
+    value: false,
+    text: '否'
+  },
+  {
+    value: true,
+    text: '是'
+  }
+]
+
+// 系统日志状态枚举
+export const sysLogStatusEnum = [
+  {
+    value: 1,
+    text: '成功',
+    name: 'SUCCESS'
+  },
+  {
+    value: 2,
+    text: '失败',
+    name: 'FAIL'
   }
 ]
 
