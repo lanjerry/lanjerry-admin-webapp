@@ -9,11 +9,16 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
+        :style="activeStyle(tag)"
         @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ tag.title }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span
+          v-if="!isAffix(tag)"
+          class="el-icon-close"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
@@ -27,7 +32,7 @@
 
 <script>
   import ScrollPane from './ScrollPane'
-  import path from 'path'
+  import path from "path"
 
   export default {
     components: { ScrollPane },
@@ -46,6 +51,9 @@
       },
       routes() {
         return this.$store.state.permission.routes
+      },
+      theme() {
+        return this.$store.state.settings.theme;
       }
     },
     watch: {
@@ -68,6 +76,13 @@
     methods: {
       isActive(route) {
         return route.path === this.$route.path
+      },
+      activeStyle(tag) {
+        if (!this.isActive(tag)) return {};
+        return {
+          "background-color": this.theme,
+          "border-color": this.theme
+        };
       },
       isAffix(tag) {
         return tag.meta && tag.meta.affix
@@ -200,7 +215,7 @@
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #d8dce5;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
     .tags-view-wrapper {
       .tags-view-item {
         display: inline-block;
@@ -249,7 +264,7 @@
       font-size: 12px;
       font-weight: 400;
       color: #333;
-      box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+      box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
       li {
         margin: 0;
         padding: 7px 16px;
@@ -272,10 +287,10 @@
         vertical-align: 2px;
         border-radius: 50%;
         text-align: center;
-        transition: all .3s cubic-bezier(.645, .045, .355, 1);
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
         transform-origin: 100% 50%;
         &:before {
-          transform: scale(.6);
+          transform: scale(0.6);
           display: inline-block;
           vertical-align: -3px;
         }
