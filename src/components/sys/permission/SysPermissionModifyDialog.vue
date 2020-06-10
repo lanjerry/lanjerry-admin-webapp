@@ -133,14 +133,17 @@
           parentId: [
             { required: true, message: '清选择上级目录', trigger: 'blur' }
           ],
-          name: [
-            { required: true, message: '权限名称不能为空', trigger: 'blur' }
-          ],
           type: [
             { required: true, message: '请选择类型', trigger: 'change' }
           ],
+          name: [
+            { required: true, message: '权限名称不能为空', trigger: 'blur' }
+          ],
           sort: [
             { required: true, message: '排序不能为空', trigger: 'blur' }
+          ],
+          path: [
+            { required: true, message: '路由地址不能为空', trigger: 'blur' }
           ],
           status: [
             { required: true, message: '请选择状态', trigger: 'change' }
