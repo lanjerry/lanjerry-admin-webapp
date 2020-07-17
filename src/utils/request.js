@@ -53,7 +53,8 @@ service.interceptors.response.use(res => {
       return Promise.reject(new Error(message))
     } else if (code !== 200) {
       Notification.error({
-        title: message
+        title: '错误',
+        message: message
       })
       return Promise.reject('error')
     } else {
