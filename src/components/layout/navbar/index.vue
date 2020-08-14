@@ -7,18 +7,21 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <nav-header-search id="nav-header-search" class="right-menu-item"/>
-
+        <el-tooltip content="查找菜单" effect="dark" placement="bottom">
+          <nav-header-search id="nav-header-search" class="right-menu-item"/>
+        </el-tooltip>
         <el-tooltip content="下载源码" effect="dark" placement="bottom">
           <nav-lanjerry id="nav-lanjerry" class="right-menu-item hover-effect"/>
         </el-tooltip>
-
-        <nav-screenfull id="nav-screenfull" class="right-menu-item hover-effect"/>
-
+        <el-tooltip content="全屏" effect="dark" placement="bottom">
+          <nav-screenfull id="nav-screenfull" class="right-menu-item hover-effect"/>
+        </el-tooltip>
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <nav-size-select id="nav-size-select" class="right-menu-item hover-effect"/>
         </el-tooltip>
-
+        <el-tooltip content="通知" effect="dark" placement="bottom">
+          <nav-notification class="right-menu-item hover-effect"/>
+        </el-tooltip>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -50,6 +53,7 @@
   import NavLanjerry from '@/components/layout/navbar/Lanjerry'
   import NavScreenfull from '@/components/layout/navbar/Screenfull'
   import NavSizeSelect from '@/components/layout/navbar/SizeSelect'
+  import NavNotification from '@/components/layout/navbar/Notification'
 
   export default {
     name: 'Navbar',
@@ -59,7 +63,8 @@
       NavHeaderSearch,
       NavLanjerry,
       NavScreenfull,
-      NavSizeSelect
+      NavSizeSelect,
+      NavNotification
     },
     computed: {
       ...mapGetters([

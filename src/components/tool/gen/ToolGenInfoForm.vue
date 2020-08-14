@@ -83,9 +83,9 @@
         tplFunctionOptions: toolGenTplFunctionEnum,
         // 表单校验
         rules: {
-          tplFunctions: [
-            { required: true, message: "请选择功能模板", trigger: "change" }
-          ],
+          // tplFunctions: [
+          //   { required: true, message: "请选择功能模板", trigger: "change" }
+          // ],
           packageName: [
             { required: true, message: "生成包路径不能为空", trigger: "blur" }
           ],

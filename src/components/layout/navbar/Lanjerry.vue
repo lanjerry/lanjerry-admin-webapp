@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon icon-class="download" @click="handleDownload"/>
+    <svg-icon icon-class="github" @click="goto"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     }
   },
   methods: {
-    handleDownload() {
+    goto() {
       window.open(this.url)
     }
   }
