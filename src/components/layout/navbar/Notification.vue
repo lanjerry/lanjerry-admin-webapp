@@ -7,20 +7,56 @@
 </template>
 
 <script>
+  import { getUserNotificationCount } from '@/api/global/currentUser'
+
   export default {
     name: 'Notification',
     data() {
       return {
-        badge: 11
+        websocket: null,
+        badge: 0
       }
     },
     methods: {
+      initCount() {
+        getUserNotificationCount().then(response => {
+          this.badge = response.data
+        })
+      },
       initNotification() {
-        this.badge = 80
+        this.websocket = new WebSocket('ws://127.0.0.1:1000/ws/notification/1')
+        this.websocket.onopen = this.onWsOpen
+        this.websocket.onmessage = this.onWsMessage
+        this.websocket.onclose = this.onWsClose
+        this.websocket.onerror = this.onWsError
+      },
+      onWsOpen() {
+        console.log('成功连接webstock')
+      },
+      onWsMessage(e) {
+        this.$notify.info({
+          position: 'bottom-right',
+          title: '提示',
+          message: e.data,
+          duration: 0
+        });
+        this.initCount();
+      },
+      onWsClose() {
+        console.log('关闭webstock')
+      },
+      onWsError() {
+        this.$notify.error({
+          title: '错误',
+          message: 'webstock出现异常'
+        });
       }
     },
+    beforeDestroy: function() {
+      this.onWsClose()
+    },
     mounted() {
-      //调用初始化websocket方法
+      this.initCount()
       this.initNotification()
     }
   }

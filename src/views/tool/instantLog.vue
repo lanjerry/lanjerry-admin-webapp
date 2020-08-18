@@ -25,9 +25,9 @@
     methods: {
       openSocket() {
         if (this.stompClient == null) {
-          this.log = '<div style="color: #18d035;font-size: 14px;padding-bottom: 7px;padding-left: 14px;">通道连接成功,静默等待....</div>'
+          this.log = '<div style="color: #18d035;font-size: 14px;padding-bottom: 7px;padding-left: 14px;">通道连接成功</div>'
           // 建立连接对象
-          let socket = new SockJS('http://127.0.0.1:1000/websocket')
+          let socket = new SockJS('http://127.0.0.1:1000/ws/logger')
           // 获取STOMP子协议的客户端对象
           this.stompClient = Stomp.over(socket)
           this.stompClient.connect({}, () => {

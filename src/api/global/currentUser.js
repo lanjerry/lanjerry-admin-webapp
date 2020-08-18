@@ -42,3 +42,11 @@ export function uploadAvatar(data) {
     data: data
   })
 }
+
+// 查询当前登录用户消息通知个数
+export function getUserNotificationCount() {
+  return request({
+    url: '/sys/user/notification/count',
+    method: 'get'
+  })
+}
