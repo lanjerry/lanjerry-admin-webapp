@@ -35,13 +35,18 @@
         console.log('成功连接webstock')
       },
       onWsMessage(e) {
-        this.$notify.info({
-          position: 'bottom-right',
-          title: '提示',
-          message: e.data,
-          duration: 0
-        })
-        this.initCount()
+        let json = JSON.parse(e.data)
+        if (json.type == 'CONTENT') {
+          this.$notify.info({
+            position: 'bottom-right',
+            title: '提示',
+            message: json.message,
+            duration: 0
+          })
+        }
+        if (json.type == 'NUMBER') {
+          this.badge = json.message
+        }
       },
       onWsClose() {
         console.log('关闭webstock')

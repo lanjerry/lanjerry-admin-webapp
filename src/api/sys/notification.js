@@ -17,3 +17,11 @@ export function saveNotification(data) {
     data: data
   })
 }
+
+// 已读系统消息
+export function readNotifications(ids) {
+  return request({
+    url: '/sys/notification/read/' + ids,
+    method: 'post'
+  })
+}
