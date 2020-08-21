@@ -7,6 +7,7 @@
 </template>
 
 <script>
+  import store from '@/store'
   import { getUserNotificationCount } from '@/api/global/currentUser'
 
   export default {
@@ -24,7 +25,7 @@
         })
       },
       initNotification() {
-        this.websocket = new WebSocket('ws://127.0.0.1:1000/ws/notification/1')
+        this.websocket = new WebSocket('ws://127.0.0.1:1000/ws/notification/' + store.getters.id)
         this.websocket.onopen = this.onWsOpen
         this.websocket.onmessage = this.onWsMessage
         this.websocket.onclose = this.onWsClose
@@ -39,8 +40,8 @@
           title: '提示',
           message: e.data,
           duration: 0
-        });
-        this.initCount();
+        })
+        this.initCount()
       },
       onWsClose() {
         console.log('关闭webstock')
@@ -49,7 +50,7 @@
         this.$notify.error({
           title: '错误',
           message: 'webstock出现异常'
-        });
+        })
       }
     },
     beforeDestroy: function() {
