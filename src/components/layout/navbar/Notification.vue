@@ -14,8 +14,10 @@
     name: 'Notification',
     data() {
       return {
+        badge: 0,
         websocket: null,
-        badge: 0
+        lockReconnect: false,
+        wsCreateHandler: null
       }
     },
     methods: {
@@ -24,15 +26,42 @@
           this.badge = response.data
         })
       },
-      initNotification() {
-        this.websocket = new WebSocket('ws://127.0.0.1:1000/ws/notification/' + store.getters.id)
-        this.websocket.onopen = this.onWsOpen
-        this.websocket.onmessage = this.onWsMessage
-        this.websocket.onclose = this.onWsClose
-        this.websocket.onerror = this.onWsError
+      createWebSocket() {
+        try {
+          this.websocket = new WebSocket('ws://127.0.0.1:1000/ws/notification/' + store.getters.id)
+          this.initWsEventHandle()
+        } catch (e) {
+          console.log('webstocket连接出现异常')
+          this.reconnect()
+        }
+      },
+      initWsEventHandle() {
+        try {
+          this.websocket.onopen = this.onWsOpen
+          this.websocket.onmessage = this.onWsMessage
+          this.websocket.onclose = this.onWsClose
+          this.websocket.onerror = this.onWsError
+        } catch (e) {
+          console.log('绑定事件没有成功')
+          this.reconnect()
+        }
+      },
+      reconnect() {
+        if (this.lockReconnect) {
+          return
+        }
+        this.lockReconnect = true
+        this.wsCreateHandler && clearTimeout(this.wsCreateHandler)
+        const that = this;
+        this.wsCreateHandler = setTimeout(function() {
+          console.log('开始重连')
+          that.createWebSocket()
+          that.lockReconnect = false
+          console.log('重连完成')
+        }, 1000)
       },
       onWsOpen() {
-        console.log('成功连接webstock')
+        console.log('成功连接webstocket')
       },
       onWsMessage(e) {
         let json = JSON.parse(e.data)
@@ -49,12 +78,14 @@
         }
       },
       onWsClose() {
-        console.log('关闭webstock')
+        console.log('关闭webstocket')
+        this.reconnect()
       },
       onWsError() {
+        this.reconnect()
         this.$notify.error({
           title: '错误',
-          message: 'webstock出现异常'
+          message: 'webstocket出现异常'
         })
       }
     },
@@ -63,7 +94,7 @@
     },
     mounted() {
       this.initCount()
-      this.initNotification()
+      this.createWebSocket()
     }
   }
 </script>
