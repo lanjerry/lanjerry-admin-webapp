@@ -2,9 +2,10 @@
   <div>
     <el-header style="line-height: 60px">
       <el-button size="mini" @click="openSocket">开启日志</el-button>
-      <el-button type="danger" size="mini" @click="closeSocket" >关闭日志</el-button>
+      <el-button type="danger" size="mini" @click="closeSocket">关闭日志</el-button>
     </el-header>
-    <div style="width: 100%; height: 760px; overflow-y: scroll; background: #0f1521; color: #aaaaaa; padding: 10px; font-size: 14px">
+    <div
+      style="width: 100%; height: 760px; overflow-y: scroll; background: #0f1521; color: #aaaaaa; padding: 10px; font-size: 14px">
       <div v-html="log"></div>
     </div>
   </div>
@@ -27,14 +28,16 @@
         if (this.stompClient == null) {
           this.log = '<div style="color: #18d035;font-size: 14px;padding-bottom: 7px;padding-left: 14px;">通道连接成功</div>'
           // 建立连接对象
-          let socket = new SockJS('http://127.0.0.1:1000/ws/logger')
+          //const wsuri = 'https://api.lanjerry.com/admin/ws/logger'
+          const wsuri = 'http://127.0.0.1:1000/ws/logger'
+          let socket = new SockJS(wsuri)
           // 获取STOMP子协议的客户端对象
           this.stompClient = Stomp.over(socket)
           this.stompClient.connect({}, () => {
             this.stompClient.subscribe('/topic/pullLogger', (event) => {
               let content = JSON.parse(event.body)
-              let level = content.level;
-              let levelStyle = '<span>' + level + '</span>';
+              let level = content.level
+              let levelStyle = '<span>' + level + '</span>'
               switch (level) {
                 case 'INFO':
                   levelStyle = '<span style="color: #90ad2b">' + level + '</span>'
