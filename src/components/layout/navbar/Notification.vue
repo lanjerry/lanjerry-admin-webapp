@@ -33,6 +33,7 @@
       // 创建消息通知的websocket
       initWebSocket() {
         try {
+          //const wsuri = 'wss://api.lanjerry.com/admin/ws/notification/' + store.getters.id //wss连接
           const wsuri = 'ws://127.0.0.1:1000/ws/notification/' + store.getters.id
           this.websocket = new WebSocket(wsuri)
           this.websocket.onopen = this.onWsOpen
