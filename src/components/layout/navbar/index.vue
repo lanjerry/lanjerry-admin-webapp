@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <nav-hamburger id="nav-hamburger" :is-active="sidebar.opened" class="hamburger-container"
-                      @toggleClick="toggleSideBar"/>
+                   @toggleClick="toggleSideBar"/>
 
     <nav-breadcrumb id="nav-breadcrumb" class="breadcrumb-container"/>
 
@@ -20,7 +20,9 @@
           <nav-size-select id="nav-size-select" class="right-menu-item hover-effect"/>
         </el-tooltip>
         <el-tooltip content="通知" effect="dark" placement="bottom">
-          <nav-notification class="right-menu-item hover-effect"/>
+          <router-link to="/sys/notification">
+            <nav-notification class="right-menu-item hover-effect"/>
+          </router-link>
         </el-tooltip>
       </template>
 

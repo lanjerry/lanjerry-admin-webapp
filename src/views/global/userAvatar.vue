@@ -1,7 +1,7 @@
 <template>
   <div>
     <img v-bind:src="options.img" @click="editCropper()" title="点击上传头像" class="img-circle img-lg" />
-    <el-dialog :title="title" :visible.sync="open" width="800px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened">
       <el-row>
         <el-col :xs="24" :md="12" :style="{height: '350px'}">
           <vue-cropper
@@ -13,6 +13,7 @@
             :autoCropHeight="options.autoCropHeight"
             :fixedBox="options.fixedBox"
             @realTime="realTime"
+            v-if="visible"
           />
         </el-col>
         <el-col :xs="24" :md="12" :style="{height: '350px'}">
@@ -54,7 +55,7 @@
 <script>
   import store from "@/store";
   import { VueCropper } from "vue-cropper";
-  import { uploadAvatar } from "@/api/global/currentUser";
+  import { uploadAvatar } from '@/api/global/currentUser'
 
   export default {
     components: { VueCropper },
@@ -67,6 +68,8 @@
       return {
         // 是否显示弹出层
         open: false,
+        // 是否显示cropper
+        visible: false,
         // 弹出层标题
         title: "修改头像",
         options: {
@@ -83,6 +86,10 @@
       // 编辑头像
       editCropper() {
         this.open = true;
+      },
+      // 打开弹出层结束时的回调
+      modalOpened() {
+        this.visible = true;
       },
       // 覆盖默认的上传行为
       requestUpload() {
@@ -115,19 +122,18 @@
       // 上传图片
       uploadImg() {
         this.$refs.cropper.getCropBlob(data => {
-          let formData = new FormData();
-          formData.append("avatarfile", data);
-          uploadAvatar(formData).then(response => {
-            if (response.code === 200) {
-              this.open = false;
-              this.options.img = process.env.VUE_APP_BASE_API + response.imgUrl;
-              this.msgSuccess("修改成功");
-            } else {
-              this.msgError(response.msg);
+          let formData = new FormData()
+          formData.append('avatarfile', data)
+          uploadAvatar(formData).then(res => {
+            if (res.code === 200) {
+              this.open = false
+              this.options.img = process.env.VUE_APP_BASE_API + res.data
+              store.commit('SET_AVATAR', this.options.img);
+              this.msgSuccess('修改成功')
             }
-            this.$refs.cropper.clearCrop();
-          });
-        });
+            this.visible = false
+          })
+        })
       },
       // 实时预览
       realTime(data) {
