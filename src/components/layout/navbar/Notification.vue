@@ -34,7 +34,7 @@
       initWebSocket() {
         try {
           const url = window.location.host + process.env.VUE_APP_BASE_API + '/ws/notification/' + store.getters.id
-          const wsuri = process.env.NODE_ENV == 'development' ? 'ws://' + url : 'wss://' + url
+          const wsuri = window.location.protocol === 'https:' ? 'wss://' + url : 'ws://' + url
           this.websocket = new WebSocket(wsuri)
           this.websocket.onopen = this.onWsOpen
           this.websocket.onmessage = this.onWsMessage

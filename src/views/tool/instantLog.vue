@@ -28,8 +28,7 @@
         if (this.stompClient == null) {
           this.log = '<div style="color: #18d035;font-size: 14px;padding-bottom: 7px;padding-left: 14px;">通道连接成功</div>'
           // 建立连接对象
-          const url = window.location.host + process.env.VUE_APP_BASE_API + '/ws/logger'
-          const wsuri = process.env.NODE_ENV == 'development' ? 'http://' + url : 'https://' + url
+          const wsuri = window.location.protocol + '//' + window.location.host + process.env.VUE_APP_BASE_API + '/ws/logger'
           let socket = new SockJS(wsuri)
           // 获取STOMP子协议的客户端对象
           this.stompClient = Stomp.over(socket)
