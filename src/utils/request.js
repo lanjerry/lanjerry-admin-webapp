@@ -31,21 +31,7 @@ service.interceptors.response.use(res => {
     const code = res.data.code || 200;
     // 获取错误信息
     const message = res.data.msg || errorCode[code] || errorCode['default']
-    if (code === 203) {
-      MessageBox.confirm(
-        '登录状态已过期或者身份异常，您可以继续留在该页面，或者重新登录',
-        '系统提示',
-        {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).then(() => {
-        store.dispatch('LogOut').then(() => {
-          location.reload() // 为了重新实例化vue-router对象 避免bug
-        })
-      })
-    } else if (code === 500) {
+    if (code === 500) {
       Message({
         message: message,
         type: 'error'
@@ -56,7 +42,7 @@ service.interceptors.response.use(res => {
         title: '错误',
         message: message
       })
-      return Promise.reject('error')
+      return Promise.reject(new Error(message))
     } else {
       return res.data
     }
