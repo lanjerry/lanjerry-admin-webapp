@@ -6,7 +6,7 @@ pipeline{
         string(name: 'version', defaultValue: 'v1.0', description: '推送镜像版本')
     }
     tools {
-        nodejs 'node-10.23.0'
+        nodejs 'node15.4.0'
     }
     stages{
         stage("build"){
