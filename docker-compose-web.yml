@@ -2,8 +2,6 @@ version: '3.9'
 services:
   lanjerry-admin-web:
     image: lanjerry-admin-web:v1.0
-    links:
-      - "lanjerry-admin-api"
     ports:
       - "9000:80"
     networks:
