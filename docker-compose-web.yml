@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  lanjerry-admin-web:
+    image: lanjerry-admin-web:v1.0
+    links:
+      - "lanjerry-admin-api"
+    ports:
+      - "9000:80"
+    networks:
+      - lanjerry-network
+    container_name: lanjerry-admin-web
+    restart: always
+    environment:
+      ADMIN_HOST: lanjerry-admin-api
+      ADMIN_PORT: 1000
+    volumes:
+      - /opt/logs/lanjerry-admin-web:/opt/lanjerry/lanjerry-admin/logs
+networks:
+  lanjerry-network:
+    external: false
+    name: lanjerry-network
